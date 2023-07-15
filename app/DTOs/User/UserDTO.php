@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\DTOs\User;
 
+use Illuminate\Database\Eloquent\Collection;
+
 class UserDTO
 {
     public string $firstname;
     public string $lastname;
     public string $email;
-    public readonly string $password;
+    public string $password;
+    public Collection $roles;
 
     public function setFirstname(string $firstname): self
     {
@@ -44,8 +47,25 @@ class UserDTO
         return $this->email;
     }
 
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+        return $this;
+    }
+
     public function getPassword(): string
     {
         return $this->password;
+    }
+
+    public function setRoles(Collection $roles): self
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+
+    public function getRoles(): Collection
+    {
+        return $this->roles;
     }
 }
