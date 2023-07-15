@@ -6,18 +6,19 @@ use Illuminate\Database\Eloquent\Collection;
 
 class RoleDTO
 {
-    public string $name;
-    public Collection $users;
+    private string $role;
+    private Collection $users;
+    private Collection $roles;
 
-    public function setName(string $name): self
+    public function setRole(string $role): self
     {
-        $this->name = $name;
+        $this->role = $role;
         return $this;
     }
 
-    public function getName(): string
+    public function getRole(): string
     {
-        return $this->name;
+        return $this->role;
     }
 
     public function setUsers(Collection $users): self
@@ -29,5 +30,16 @@ class RoleDTO
     public function getUsers(): Collection
     {
         return $this->users;
+    }
+
+    public function setRoles(Collection $roles): self
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+
+    public function getRoles(): Collection
+    {
+        return $this->roles;
     }
 }

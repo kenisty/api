@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Collection;
 
 class UserDTO
 {
-    public string $firstname;
-    public string $lastname;
-    public string $email;
-    public string $password;
-    public Collection $roles;
-    public Collection $permissions;
+    private string $firstname;
+    private string $lastname;
+    private string $email;
+    private string $password;
+    private Collection $roles;
+    private Collection $permissions;
 
     public function setFirstname(string $firstname): self
     {
