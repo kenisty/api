@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -36,6 +37,7 @@ class User extends Authenticatable
     ];
 
     public function roles(): BelongsToMany { return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id', 'id', 'id', 'users')->withTimestamps(); }
+    public function permissions(): Collection { return $this->roles()->with('permissions')->get()->pluck('permissions')->flatten()->unique(); }
     public function createdRoles(): HasMany { return $this->hasMany(Role::class, 'created_by', 'id'); }
     public function createdPermissions(): HasMany { return $this->hasMany(Permission::class, 'created_by', 'id'); }
 }

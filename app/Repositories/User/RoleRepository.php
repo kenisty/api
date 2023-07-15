@@ -5,7 +5,6 @@ namespace App\Repositories\User;
 use App\Models\User\Role;
 use App\Repositories\RepositoryAbstractClass;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Log;
 
 class RoleRepository extends RepositoryAbstractClass
 {

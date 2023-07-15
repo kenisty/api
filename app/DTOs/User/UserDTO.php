@@ -13,6 +13,7 @@ class UserDTO
     public string $email;
     public string $password;
     public Collection $roles;
+    public Collection $permissions;
 
     public function setFirstname(string $firstname): self
     {
@@ -67,5 +68,16 @@ class UserDTO
     public function getRoles(): Collection
     {
         return $this->roles;
+    }
+
+    public function setPermissions(Collection $permissions): self
+    {
+        $this->permissions = $permissions;
+        return $this;
+    }
+
+    public function getPermissions(): Collection
+    {
+        return $this->permissions;
     }
 }
