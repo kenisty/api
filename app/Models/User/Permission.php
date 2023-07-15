@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 
 class Permission extends Model
 {
@@ -20,6 +21,7 @@ class Permission extends Model
         'created_by'
     ];
 
-    public function createdBy(): BelongsTo { return $this->belongsTo(Permission::class, 'created_by', 'id', 'createdPermissions'); }
     public function roles(): BelongsToMany { return $this->belongsToMany(Role::class, 'permission_role', 'permission_id', 'role_id', 'id', 'id', 'permissions')->withTimestamps(); }
+    public function users(): Collection { return $this->roles()->with('users')->get()->pluck('users')->flatten()->unique(); }
+    public function createdBy(): BelongsTo { return $this->belongsTo(Permission::class, 'created_by', 'id', 'createdPermissions'); }
 }
