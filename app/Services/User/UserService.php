@@ -6,21 +6,24 @@ namespace App\Services\User;
 
 use App\DTOs\User\UserDTO;
 use App\Exceptions\User\UserAlreadyExistsException;
+use App\Models\User\User;
 use App\Repositories\User\RoleRepository;
 use App\Repositories\User\UserRepository;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class UserService
 {
     public function __construct(
-        private readonly UserRepository $userRepository,
-        private readonly RoleRepository $roleRepository
+        private readonly UserRepository   $userRepository,
+        private readonly RoleRepository   $roleRepository,
+        private readonly UserCacheService $userCacheService
     ) {}
 
     /**
-     * @throws Exception
+     * @throws UserAlreadyExistsException|Exception
      */
     public function createUser(UserDTO $userDTO): UserDTO
     {
@@ -54,6 +57,17 @@ class UserService
             ->setFirstname($user->first_name)
             ->setLastname($user->last_name)
             ->setEmail($user->email)
-            ->setRoles($user->roles);
+            ->setRoles($this->getUserRoles($user))
+            ->setPermissions($this->getUserPermissions($user));
+    }
+
+    public function getUserRoles(User $user): Collection
+    {
+        return $this->userCacheService->setUserRolesCache($user);
+    }
+
+    public function getUserPermissions(User $user): Collection
+    {
+        return $this->userCacheService->setUserPermissionsCache($user);
     }
 }
