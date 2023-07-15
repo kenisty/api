@@ -28,16 +28,16 @@ class UserService
     public function createUser(UserDTO $userDTO): UserDTO
     {
         $entry = [
-            'first_name' => $userDTO->firstname,
-            'last_name' => $userDTO->lastname,
-            'email' => $userDTO->email,
-            'password' => Hash::make($userDTO->password)
+            'first_name' => $userDTO->getFirstname(),
+            'last_name' => $userDTO->getLastname(),
+            'email' => $userDTO->getEmail(),
+            'password' => Hash::make($userDTO->getPassword())
         ];
 
         $user = $this->userRepository->findByEmail($entry['email']);
 
         if ($user) {
-            Log::error('Duplicate email found. User creation failed.', ['email' => $user->email]);
+            Log::error('Duplicate email found. User creation failed.', ['email' => $entry['email']]);
             throw new UserAlreadyExistsException;
         }
 
@@ -45,7 +45,7 @@ class UserService
             $user = $this->userRepository->create($entry);
             Log::info('User successfully created in the database.', ['id' => $user->id]);
 
-            $defaultRole = $this->roleRepository->findByName('user');
+            $defaultRole = $this->roleRepository->findByRole('user');
             $user->roles()->attach($defaultRole);
             Log::info('Default role [user] assigned to the user in the database.', ['id' => $user->id]);
         } catch (Exception $exception) {
