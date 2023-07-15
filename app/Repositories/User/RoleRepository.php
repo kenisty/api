@@ -18,9 +18,9 @@ class RoleRepository extends RepositoryAbstractClass
         return Role::find($id);
     }
 
-    public function findByName(string $name): Role|null
+    public function findByRole(string $role): Role|null
     {
-        return Role::where('role', $name)->first();
+        return Role::where('role', $role)->first();
     }
 
     public function create(mixed $entry): Role
