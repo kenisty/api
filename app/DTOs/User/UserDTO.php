@@ -17,10 +17,10 @@ class UserDTO
 
     private ?string $password;
 
-    /** @var array<Role> $roles */
+    /** @var array<Role>|null $roles */
     private ?array $roles;
 
-    /** @var array<Permission> $permissions */
+    /** @var array<Permission>|null $permissions */
     private ?array $permissions;
 
     public function setFirstname(?string $firstname): self
