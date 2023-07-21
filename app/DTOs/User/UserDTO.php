@@ -9,19 +9,19 @@ use App\Models\User\Role;
 
 class UserDTO
 {
-    private ?string $firstname;
+    private ?string $firstname = null;
 
-    private ?string $lastname;
+    private ?string $lastname = null;
 
-    private ?string $email;
+    private ?string $email = null;
 
-    private ?string $password;
+    private ?string $password = null;
 
     /** @var array<Role>|null $roles */
-    private ?array $roles;
+    private ?array $roles = null;
 
     /** @var array<Permission>|null $permissions */
-    private ?array $permissions;
+    private ?array $permissions = null;
 
     public function setFirstname(?string $firstname): self
     {
