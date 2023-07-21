@@ -4,79 +4,99 @@ declare(strict_types=1);
 
 namespace App\DTOs\User;
 
-use Illuminate\Database\Eloquent\Collection;
+use App\Models\User\Permission;
+use App\Models\User\Role;
 
 class UserDTO
 {
-    private string $firstname;
-    private string $lastname;
-    private string $email;
-    private string $password;
-    private Collection $roles;
-    private Collection $permissions;
+    private ?string $firstname;
 
-    public function setFirstname(string $firstname): self
+    private ?string $lastname;
+
+    private ?string $email;
+
+    private ?string $password;
+
+    /** @var array<Role> $roles */
+    private ?array $roles;
+
+    /** @var array<Permission> $permissions */
+    private ?array $permissions;
+
+    public function setFirstname(?string $firstname): self
     {
         $this->firstname = $firstname;
         return $this;
     }
 
-    public function getFirstname(): string
+    public function getFirstname(): ?string
     {
         return $this->firstname;
     }
 
-    public function setLastname(string $lastname): self
+    public function setLastname(?string $lastname): self
     {
         $this->lastname = $lastname;
         return $this;
     }
 
-    public function getLastname(): string
+    public function getLastname(): ?string
     {
         return $this->lastname;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
         return $this;
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
         return $this;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setRoles(Collection $roles): self
+    /**
+     * @param array<Role> $roles
+     */
+    public function setRoles(?array $roles): self
     {
         $this->roles = $roles;
         return $this;
     }
 
-    public function getRoles(): Collection
+    /**
+     * @return array<Role>|null
+     */
+    public function getRoles(): ?array
     {
         return $this->roles;
     }
 
-    public function setPermissions(Collection $permissions): self
+    /**
+     * @param array<Permission> $permissions
+     */
+    public function setPermissions(?array $permissions): self
     {
         $this->permissions = $permissions;
         return $this;
     }
 
-    public function getPermissions(): Collection
+    /**
+     * @return array<Permission>|null
+     */
+    public function getPermissions(): ?array
     {
         return $this->permissions;
     }
