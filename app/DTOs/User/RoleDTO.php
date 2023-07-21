@@ -2,44 +2,40 @@
 
 namespace App\DTOs\User;
 
-use Illuminate\Database\Eloquent\Collection;
+use App\Models\User\User;
 
 class RoleDTO
 {
-    private string $role;
-    private Collection $users;
-    private Collection $roles;
+    private ?string $role = null;
 
-    public function setRole(string $role): self
+    /** @var array<User>|null $users */
+    private ?array $users = null;
+
+    public function setRole(?string $role): self
     {
         $this->role = $role;
         return $this;
     }
 
-    public function getRole(): string
+    public function getRole(): ?string
     {
         return $this->role;
     }
 
-    public function setUsers(Collection $users): self
+    /**
+     * @param array<User>|null $users
+     */
+    public function setUsers(?array $users): self
     {
         $this->users = $users;
         return $this;
     }
 
-    public function getUsers(): Collection
+    /**
+     * @return array<User>|null
+     */
+    public function getUsers(): ?array
     {
         return $this->users;
-    }
-
-    public function setRoles(Collection $roles): self
-    {
-        $this->roles = $roles;
-        return $this;
-    }
-
-    public function getRoles(): Collection
-    {
-        return $this->roles;
     }
 }
