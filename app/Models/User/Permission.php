@@ -2,6 +2,7 @@
 
 namespace App\Models\User;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,10 +12,12 @@ use Illuminate\Support\Collection;
 
 class Permission extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, HasUuids, SoftDeletes;
 
     protected $connection = 'mysql';
     protected $table = 'permissions';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
         'permission',
