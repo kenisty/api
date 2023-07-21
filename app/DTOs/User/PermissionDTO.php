@@ -4,43 +4,49 @@ declare(strict_types=1);
 
 namespace App\DTOs\User;
 
+use App\Models\User\Role;
+use App\Models\User\User;
 use Illuminate\Database\Eloquent\Collection;
 
 class PermissionDTO
 {
-    private string $permission;
-    private Collection $roles;
-    private Collection $users;
+    private ?string $permission = null;
 
-    public function setPermission(string $permission): self
+    /** @var array<Role>|null $roles */
+    private ?array $roles = null;
+
+    /** @var array<User>|null $users */
+    private ?array $users = null;
+
+    public function setPermission(?string $permission): self
     {
         $this->permission = $permission;
         return $this;
     }
 
-    public function getPermission(): string
+    public function getPermission(): ?string
     {
         return $this->permission;
     }
 
-    public function setRoles(Collection $roles): self
+    public function setRoles(?array $roles): self
     {
         $this->roles = $roles;
         return $this;
     }
 
-    public function getRoles(): Collection
+    public function getRoles(): ?array
     {
         return $this->roles;
     }
 
-    public function setUsers(Collection $users): self
+    public function setUsers(?array $users): self
     {
         $this->users = $users;
         return $this;
     }
 
-    public function getUsers(): Collection
+    public function getUsers(): ?array
     {
         return $this->users;
     }
