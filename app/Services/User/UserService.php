@@ -57,8 +57,8 @@ class UserService
             ->setFirstname($user->first_name)
             ->setLastname($user->last_name)
             ->setEmail($user->email)
-            ->setRoles($this->getUserRoles($user))
-            ->setPermissions($this->getUserPermissions($user));
+            ->setRoles($this->getUserRoles($user)->toArray())
+            ->setPermissions($this->getUserPermissions($user)->toArray());
     }
 
     public function getUserRoles(User $user): Collection
