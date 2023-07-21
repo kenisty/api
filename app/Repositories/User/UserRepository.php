@@ -7,7 +7,6 @@ namespace App\Repositories\User;
 use App\Models\User\User;
 use App\Repositories\RepositoryAbstractClass;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Log;
 
 class UserRepository extends RepositoryAbstractClass
 {
