@@ -2,6 +2,7 @@
 
 namespace App\DTOs\User;
 
+use App\Models\User\Permission;
 use App\Models\User\User;
 
 class RoleDTO
@@ -10,6 +11,9 @@ class RoleDTO
 
     /** @var array<User>|null $users */
     private ?array $users = null;
+
+    /** @var array<Permission>|null $permissions */
+    private ?array $permissions = null;
 
     public function setRole(?string $role): self
     {
@@ -37,5 +41,22 @@ class RoleDTO
     public function getUsers(): ?array
     {
         return $this->users;
+    }
+
+    /**
+     * @param array<Permission>|null $permissions
+     */
+    public function setPermissions(?array $permissions): self
+    {
+        $this->permissions = $permissions;
+        return $this;
+    }
+
+    /**
+     * @return array<Permission>|null
+     */
+    public function getPermissions(): ?array
+    {
+        return $this->permissions;
     }
 }
