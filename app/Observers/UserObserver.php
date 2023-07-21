@@ -3,12 +3,12 @@
 namespace App\Observers;
 
 use App\Models\User\User;
-use App\Services\User\UserCacheService;
+use App\Services\Cache\UserCacheService;
 
-class UserObserver
+readonly class UserObserver
 {
     public function __construct(
-        private readonly UserCacheService $userCacheService
+        private UserCacheService $userCacheService
     ) {}
 
     public function created(User $user): void

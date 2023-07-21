@@ -9,6 +9,7 @@ use App\Exceptions\User\UserAlreadyExistsException;
 use App\Models\User\User;
 use App\Repositories\User\RoleRepository;
 use App\Repositories\User\UserRepository;
+use App\Services\Cache\UserCacheService;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;

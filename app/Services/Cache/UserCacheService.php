@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\User;
+namespace App\Services\Cache;
 
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Collection;
