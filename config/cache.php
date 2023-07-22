@@ -16,6 +16,7 @@ return [
     */
 
     'default' => env('CACHE_DRIVER', 'file'),
+    'time_to_live' => env('CACHE_TIME_TO_LIVE', 7776000),
 
     /*
     |--------------------------------------------------------------------------

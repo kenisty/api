@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Services\Cache;
+
+use App\Models\User\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Cache;
+
+class UserCacheService
+{
+    public function setUserRolesCache(User $user): Collection
+    {
+        return Cache::remember("user-{$user->id}-roles", config('cache.time_to_live'), fn() => $user->roles);
+    }
+
+    public function removeUserRolesCache(User $user): void
+    {
+        Cache::forget("user-{$user->id}-roles");
+    }
+}
