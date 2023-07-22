@@ -5,3 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => view('welcome'))->name('index');
 Route::middleware('auth:sanctum')->get('/user', fn (Request $request) =>  $request->user());
+
+Route::group(['prefix' => 'auth', 'controller' => ], function () {
+
+});
