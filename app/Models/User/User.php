@@ -23,7 +23,6 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $email_verified_at
  * @property Collection<Role> $roles
  * @property Collection<Role> $createdRoles
- * @property Collection<Permission> $permissions
  * @property Collection<Permission> $createdPermissions
  */
 class User extends Authenticatable
@@ -54,7 +53,5 @@ class User extends Authenticatable
 
     public function roles(): BelongsToMany { return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id', 'id', 'id', 'users')->withTimestamps(); }
     public function createdRoles(): HasMany { return $this->hasMany(Role::class, 'created_by', 'id'); }
-
-    public function permissions(): Collection { return $this->roles()->with('permissions')->get()->pluck('permissions')->flatten()->unique(); }
     public function createdPermissions(): HasMany { return $this->hasMany(Permission::class, 'created_by', 'id'); }
 }

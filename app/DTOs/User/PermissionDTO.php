@@ -6,7 +6,6 @@ namespace App\DTOs\User;
 
 use App\Models\User\Role;
 use App\Models\User\User;
-use Illuminate\Database\Eloquent\Collection;
 
 class PermissionDTO
 {

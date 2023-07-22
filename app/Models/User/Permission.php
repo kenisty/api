@@ -15,7 +15,6 @@ use Illuminate\Support\Collection;
  * @property string $id
  * @property string $permission
  * @property Collection<Role> $roles
- * @property Collection<User> $users
  * @property User $createdBy
  */
 class Permission extends Model
@@ -33,6 +32,5 @@ class Permission extends Model
     ];
 
     public function roles(): BelongsToMany { return $this->belongsToMany(Role::class, 'permission_role', 'permission_id', 'role_id', 'id', 'id', 'permissions')->withTimestamps(); }
-    public function users(): Collection { return $this->roles()->with('users')->get()->pluck('users')->flatten()->unique(); }
     public function createdBy(): BelongsTo { return $this->belongsTo(Permission::class, 'created_by', 'id', 'createdPermissions'); }
 }
