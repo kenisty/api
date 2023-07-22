@@ -15,12 +15,12 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
-class UserService
+readonly class UserService
 {
     public function __construct(
-        private readonly UserRepository   $userRepository,
-        private readonly RoleRepository   $roleRepository,
-        private readonly UserCacheService $userCacheService
+        private UserRepository   $userRepository,
+        private RoleRepository   $roleRepository,
+        private UserCacheService $userCacheService
     ) {}
 
     /**
