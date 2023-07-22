@@ -11,6 +11,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
+/**
+ * @property string $id
+ * @property string $permission
+ * @property Collection<Role> $roles
+ * @property Collection<User> $users
+ * @property User $createdBy
+ */
 class Permission extends Model
 {
     use HasFactory, HasUuids, SoftDeletes, PruneModel;

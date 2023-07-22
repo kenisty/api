@@ -13,6 +13,19 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @property string $id
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $email
+ * @property string $password
+ * @property string $remember_token
+ * @property string $email_verified_at
+ * @property Collection<Role> $roles
+ * @property Collection<Role> $createdRoles
+ * @property Collection<Permission> $permissions
+ * @property Collection<Permission> $createdPermissions
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasUuids, PruneModel;
