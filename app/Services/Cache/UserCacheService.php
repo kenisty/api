@@ -17,4 +17,22 @@ class UserCacheService
     {
         Cache::forget("user-{$user->id}-roles");
     }
+
+    public function setUserPermissionsCache(User $user): Collection
+    {
+        return Cache::remember("user-{$user->id}-permissions", config('cache.time_to_live'), function () use ($user) {
+            $permissions = new Collection();
+
+            foreach ($user->roles as $role) {
+                $permissions->add($role->permissions);
+            }
+
+            return $permissions;
+        });
+    }
+
+    public function removeUserPermissionsCache(User $user): void
+    {
+        Cache::forget("user-{$user->id}-permissions");
+    }
 }
