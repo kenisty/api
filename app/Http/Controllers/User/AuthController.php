@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\User;
 
 use App\DTOs\User\UserDTO;
-use App\Enum\ResponseCode;
-use App\Enum\ResponseStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\RegisterUserRequest;
 use App\Response\User\RegisterUserResponse;
@@ -39,7 +37,8 @@ class AuthController extends Controller
             ->setFirstname($data[self::KEY_FIRST_NAME])
             ->setLastname($data[self::KEY_LAST_NAME])
             ->setEmail($data[self::KEY_EMAIL])
-            ->setPassword($data[self::KEY_PASSWORD]);
+            ->setPassword($data[self::KEY_PASSWORD])
+            ->setIsRegistering(false);
 
         try {
             $createdUserDTO = $this->userService->createUser($userDTO);

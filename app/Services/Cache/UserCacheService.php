@@ -2,6 +2,7 @@
 
 namespace App\Services\Cache;
 
+use App\Models\User\Role;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -21,13 +22,7 @@ class UserCacheService
     public function setUserPermissionsCache(User $user): Collection
     {
         return Cache::remember("user-{$user->id}-permissions", config('cache.time_to_live'), function () use ($user) {
-            $permissions = new Collection();
-
-            foreach ($user->roles as $role) {
-                $permissions->add($role->permissions);
-            }
-
-            return $permissions;
+            return collect(array_map(fn(Role $role) => $role->permissions, $user->roles->toArray()));
         });
     }
 

@@ -22,8 +22,7 @@ class RegisterUserResponse
     private const KEY_LAST_NAME = 'last_name';
     private const KEY_EMAIL = 'email';
     private const KEY_PASSWORD = 'password';
-    private const KEY_ROLES = 'roles';
-    private const KEY_PERMISSIONS = 'permissions';
+    private const KEY_TOKEN = 'token';
 
     public function fail(Exception $exception): JsonResponse
     {
@@ -39,19 +38,21 @@ class RegisterUserResponse
 
     public function success(UserDTO $userDTO): JsonResponse
     {
+        $data = [
+            self::KEY_TOKEN => $userDTO->getToken(),
+            self::KEY_USER => [
+                self::KEY_FIRST_NAME => $userDTO->getFirstname(),
+                self::KEY_LAST_NAME => $userDTO->getLastname(),
+                self::KEY_EMAIL => $userDTO->getEmail(),
+                self::KEY_TOKEN => $userDTO->getToken(),
+            ],
+        ];
+
         return $this->successResponse(
             ResponseStatus::CREATED,
             ResponseCode::ACCEPTED_AND_CREATED_CODE,
             self::USER_REGISTERED_MESSAGE,
-            [
-                self::KEY_USER => [
-                    self::KEY_FIRST_NAME => $userDTO->getFirstname(),
-                    self::KEY_LAST_NAME => $userDTO->getLastname(),
-                    self::KEY_EMAIL => $userDTO->getEmail()
-                ],
-                self::KEY_ROLES => $userDTO->getRoles(),
-                self::KEY_PERMISSIONS => $userDTO->getPermissions()
-            ]
+            $data
         );
     }
 }

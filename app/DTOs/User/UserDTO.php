@@ -17,6 +17,10 @@ class UserDTO
 
     private ?string $password = null;
 
+    private bool $isRegistering = false;
+
+    private ?string $token = null;
+
     /** @var array<Role>|null $roles */
     private ?array $roles = null;
 
@@ -65,6 +69,28 @@ class UserDTO
     public function getPassword(): ?string
     {
         return $this->password;
+    }
+
+    public function setIsRegistering(?bool $isRegistering): self
+    {
+        $this->isRegistering = $isRegistering;
+        return $this;
+    }
+
+    public function getIsRegistering(): bool
+    {
+        return $this->isRegistering;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
     }
 
     /**

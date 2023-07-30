@@ -9,18 +9,18 @@ use App\Exceptions\User\UserAlreadyExistsException;
 use App\Models\User\User;
 use App\Repositories\User\RoleRepository;
 use App\Repositories\User\UserRepository;
-use App\Services\Cache\UserCacheService;
 use Exception;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 readonly class UserService
 {
+    private const KEY_DEFAULT_ROLE = 'user';
+    private const KEY_CREATE_USER_TOKEN_NAME = 'userToken';
+
     public function __construct(
-        private UserRepository   $userRepository,
-        private RoleRepository   $roleRepository,
-        private UserCacheService $userCacheService
+        private UserRepository $userRepository,
+        private RoleRepository $roleRepository,
     ) {}
 
     /**
@@ -32,7 +32,7 @@ readonly class UserService
             'first_name' => $userDTO->getFirstname(),
             'last_name' => $userDTO->getLastname(),
             'email' => $userDTO->getEmail(),
-            'password' => Hash::make($userDTO->getPassword())
+            'password' => Hash::make($userDTO->getPassword()),
         ];
 
         $user = $this->userRepository->findByEmail($entry['email']);
@@ -45,30 +45,29 @@ readonly class UserService
         try {
             $user = $this->userRepository->create($entry);
             Log::info('User successfully created in the database.', ['id' => $user->id]);
-
-            $defaultRole = $this->roleRepository->findByRole('user');
-            $user->roles()->attach($defaultRole);
-            Log::info('Default role [user] assigned to the user in the database.', ['id' => $user->id]);
+            $this->assignUserDefaultRole($user);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             throw $exception;
+        }
+
+        $token = null;
+
+        if ($userDTO->getIsRegistering()) {
+            $token = $user->createToken(self::KEY_CREATE_USER_TOKEN_NAME)->plainTextToken;
         }
 
         return (new UserDTO())
             ->setFirstname($user->first_name)
             ->setLastname($user->last_name)
             ->setEmail($user->email)
-            ->setRoles($this->getUserRoles($user)->toArray())
-            ->setPermissions($this->getUserPermissions($user)->toArray());
+            ->setToken($token);
     }
 
-    public function getUserRoles(User $user): Collection
+    private function assignUserDefaultRole(User $user): void
     {
-        return $this->userCacheService->setUserRolesCache($user);
-    }
-
-    public function getUserPermissions(User $user): Collection
-    {
-        return $this->userCacheService->setUserPermissionsCache($user);
+        $defaultRole = $this->roleRepository->findByRole(self::KEY_DEFAULT_ROLE);
+        $user->roles()->attach($defaultRole);
+        Log::info("Default role [" . self::KEY_DEFAULT_ROLE . "] assigned to the user in the database.", ['id' => $user->id]);
     }
 }
