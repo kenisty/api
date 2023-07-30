@@ -2,23 +2,31 @@
 
 namespace App\Traits;
 
+use App\Enum\ResponseCode;
+use App\Enum\ResponseStatus;
 use Illuminate\Http\JsonResponse;
 
 trait ResponseTrait
 {
-    const VALIDATION_FAILED_CODE = 400;
+    private const KEY_STATUS = 'status';
+    private const KEY_MESSAGE = 'message';
+    private const KEY_DATA =  'data';
 
-    public function failResponse(string $msg, mixed $data, int $code): JsonResponse
+    private function successResponse(ResponseStatus $status, ResponseCode $code, string $msg, mixed $data):JsonResponse
     {
         return response()->json([
-            'success' => false,
-            'message' => $msg,
-            'data' => $data
-        ], $code);
+            self::KEY_STATUS => $status,
+            self::KEY_MESSAGE => $msg,
+            self::KEY_DATA => $data
+        ], $code->value);
     }
 
-    public function validationFailedResponse(string $msg, mixed $data): JsonResponse
+    private function failResponse(ResponseStatus $status, ResponseCode $code, string $msg, mixed $data): JsonResponse
     {
-        return $this->failResponse($msg, $data, self::VALIDATION_FAILED_CODE);
+        return response()->json([
+            self::KEY_STATUS => $status,
+            self::KEY_MESSAGE => $msg,
+            self::KEY_DATA => $data
+        ], $code->value);
     }
 }
