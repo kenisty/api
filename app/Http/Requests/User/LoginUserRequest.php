@@ -16,7 +16,10 @@ class LoginUserRequest extends FormRequest
 
     private const VALIDATION_FAILED_MESSAGE = 'Login failed.';
 
-    public function authorize(): bool { return true; }
+    public function authorize(): bool
+    {
+        return true;
+    }
 
     public function rules(): array
     {

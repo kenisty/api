@@ -9,7 +9,7 @@ trait PruneModel
 {
     use Prunable;
 
-    const DAYS = 30;
+    public const DAYS = 30;
 
     public function prunable(): Builder
     {

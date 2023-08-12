@@ -10,32 +10,32 @@ use Illuminate\Database\Eloquent\Collection;
 
 class UserRepository extends RepositoryAbstractClass
 {
-    public function getAll(): Collection
+    protected function getAll(): Collection
     {
         return User::all();
     }
 
-    public function find(string $id): User|null
+    protected function find(string $id): User|null
     {
         return User::find($id);
     }
 
-    public function findByEmail(string $email): User|null
+    protected function findByEmail(string $email): User|null
     {
         return User::where('email', $email)->first();
     }
 
-    public function create(mixed $entry): User
+    protected function create(mixed $entry): User
     {
         return User::create($entry);
     }
 
-    public function update(string $id, mixed $entry): User
+    protected function update(string $id, mixed $entry): User
     {
         return User::findOrFail($id)->update($entry);
     }
 
-    public function delete(string $id): void
+    protected function delete(string $id): void
     {
         User::findOrFail($id)->delete();
     }

@@ -27,7 +27,11 @@ use Laravel\Sanctum\HasApiTokens;
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, HasUuids, Notifiable, PruneModel;
+    use HasApiTokens;
+    use HasFactory;
+    use HasUuids;
+    use Notifiable;
+    use PruneModel;
 
     protected $connection = 'mysql';
     protected $table = 'users';
@@ -51,7 +55,18 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function roles(): BelongsToMany { return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id', 'id', 'id', 'users')->withTimestamps(); }
-    public function createdRoles(): HasMany { return $this->hasMany(Role::class, 'created_by', 'id'); }
-    public function createdPermissions(): HasMany { return $this->hasMany(Permission::class, 'created_by', 'id'); }
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id', 'id', 'id', 'users')->withTimestamps();
+    }
+
+    public function createdRoles(): HasMany
+    {
+        return $this->hasMany(Role::class, 'created_by', 'id');
+    }
+
+    public function createdPermissions(): HasMany
+    {
+        return $this->hasMany(Permission::class, 'created_by', 'id');
+    }
 }

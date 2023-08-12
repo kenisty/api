@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Services\User;
 
@@ -30,14 +30,15 @@ readonly class UserService
 
     private const KEY_DUPLICATE_USER_MESSAGE = 'Duplicate email found. User creation failed.';
     private const KEY_USER_CREATED_MESSAGE = 'User successfully created in the database.';
-    private const KEY_USER_ASSIGNED_DEFAULT_ROLE_MESSAGE = 'Default role [' . self::KEY_DEFAULT_ROLE . '] assigned to the user in the database.';
+    private const KEY_USER_ASSIGNED_DEFAULT_ROLE_MESSAGE = 'Default role ['.self::KEY_DEFAULT_ROLE.'] assigned to the user in the database.';
     private const KEY_USER_NOT_FOUND_MESSAGE = 'User not found. Login failed.';
     private const KEY_WRONG_PASSWORD_MESSAGE = 'Wrong password. Login failed.';
 
     public function __construct(
         private UserRepository $userRepository,
         private RoleRepository $roleRepository,
-    ) {}
+    ) {
+    }
 
     /**
      * @throws Exception|UserAlreadyExistsException
@@ -55,24 +56,24 @@ readonly class UserService
 
         if ($user) {
             Log::error(self::KEY_DUPLICATE_USER_MESSAGE, [
-                self::KEY_EMAIL => $entry[self::KEY_EMAIL]
+                self::KEY_EMAIL => $entry[self::KEY_EMAIL],
             ]);
 
-            throw new UserAlreadyExistsException;
+            throw new UserAlreadyExistsException();
         }
 
         try {
             $user = $this->userRepository->create($entry);
 
             Log::info(self::KEY_USER_CREATED_MESSAGE, [
-                self::KEY_ID => $user->id
+                self::KEY_ID => $user->id,
             ]);
 
             $this->assignUserDefaultRole($user); // TODO: return role
             $token = $this->assignUserToken($user, $userDTO->getIsCreatedByAnotherUser());
         } catch (Exception $exception) {
             Log::error($exception->getMessage(), [
-                self::KEY_EXCEPTION => $exception->getTraceAsString()
+                self::KEY_EXCEPTION => $exception->getTraceAsString(),
             ]);
 
             throw $exception;
@@ -92,7 +93,7 @@ readonly class UserService
         $user->roles()->attach($defaultRole);
 
         Log::info(self::KEY_USER_ASSIGNED_DEFAULT_ROLE_MESSAGE, [
-            self::KEY_ID => $user->id
+            self::KEY_ID => $user->id,
         ]);
     }
 
@@ -103,6 +104,7 @@ readonly class UserService
         }
 
         $user->tokens()->delete();
+
         return $user->createToken(self::KEY_CREATE_USER_TOKEN_NAME)->plainTextToken;
     }
 
@@ -120,27 +122,27 @@ readonly class UserService
 
         if (!$user) {
             Log::error(self::KEY_USER_NOT_FOUND_MESSAGE, [
-                self::KEY_ID => $user->id
+                self::KEY_ID => $user->id,
             ]);
 
-            throw new UserNotFoundException;
+            throw new UserNotFoundException();
         }
 
         $passwordCheck = Hash::check($entry[self::KEY_PASSWORD], $user->password);
 
         if (!$passwordCheck) {
             Log::error(self::KEY_WRONG_PASSWORD_MESSAGE, [
-                self::KEY_ID => $user->id
+                self::KEY_ID => $user->id,
             ]);
 
-            throw new InvalidPasswordException;
+            throw new InvalidPasswordException();
         }
 
         try {
             $token = $user->createToken(self::KEY_CREATE_USER_TOKEN_NAME)->plainTextToken;
         } catch (Exception $exception) {
             Log::error($exception->getMessage(), [
-                self::KEY_EXCEPTION => $exception->getTraceAsString()
+                self::KEY_EXCEPTION => $exception->getTraceAsString(),
             ]);
 
             throw $exception;

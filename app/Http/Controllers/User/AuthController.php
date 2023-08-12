@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\User;
 
 use App\DTOs\User\UserDTO;
@@ -24,7 +26,8 @@ class AuthController extends Controller
 
     public function __construct(
         private readonly UserService $userService,
-    ) {}
+    ) {
+    }
 
     public function register(RegisterUserRequest $request): JsonResponse
     {
@@ -55,7 +58,7 @@ class AuthController extends Controller
     {
         $data = $request->safe([
             self::KEY_EMAIL,
-            self::KEY_PASSWORD
+            self::KEY_PASSWORD,
         ]);
 
         $userDTO = (new UserDTO())
@@ -65,7 +68,7 @@ class AuthController extends Controller
 
         try {
             $loggedInUserDTO = $this->userService->loginUser($userDTO);
-        } catch (Exception $exception) {
+        } catch (Exception  $exception) {
             return (new LoginUserResponse())->fail($exception);
         }
 

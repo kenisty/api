@@ -10,14 +10,14 @@ trait ResponseTrait
 {
     private const KEY_STATUS = 'status';
     private const KEY_MESSAGE = 'message';
-    private const KEY_DATA =  'data';
+    private const KEY_DATA = 'data';
 
-    private function successResponse(ResponseStatus $status, ResponseCode $code, string $msg, mixed $data):JsonResponse
+    private function successResponse(ResponseStatus $status, ResponseCode $code, string $msg, mixed $data): JsonResponse
     {
         return response()->json([
             self::KEY_STATUS => $status,
             self::KEY_MESSAGE => $msg,
-            self::KEY_DATA => $data
+            self::KEY_DATA => $data,
         ], $code->value);
     }
 
@@ -26,7 +26,7 @@ trait ResponseTrait
         return response()->json([
             self::KEY_STATUS => $status,
             self::KEY_MESSAGE => $msg,
-            self::KEY_DATA => $data
+            self::KEY_DATA => $data,
         ], $code->value);
     }
 }
