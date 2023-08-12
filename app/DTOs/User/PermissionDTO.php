@@ -29,6 +29,10 @@ class PermissionDTO
         return $this->permission;
     }
 
+    /**
+     * @param array<Role>|null $roles
+     * @return $this
+     */
     public function setRoles(?array $roles): self
     {
         $this->roles = $roles;
@@ -36,11 +40,18 @@ class PermissionDTO
         return $this;
     }
 
+    /**
+     * @return array<Role>|null
+     */
     public function getRoles(): ?array
     {
         return $this->roles;
     }
 
+    /**
+     * @param array<User>|null $users
+     * @return $this
+     */
     public function setUsers(?array $users): self
     {
         $this->users = $users;
@@ -48,6 +59,9 @@ class PermissionDTO
         return $this;
     }
 
+    /**
+     * @return array<User>|null
+     */
     public function getUsers(): ?array
     {
         return $this->users;

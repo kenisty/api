@@ -120,7 +120,7 @@ readonly class UserService
 
         $user = $this->userRepository->findByEmail($entry[self::KEY_EMAIL]);
 
-        if (! $user) {
+        if (!$user) {
             Log::error(self::KEY_USER_NOT_FOUND_MESSAGE, [
                 self::KEY_ID => $user->id,
             ]);
@@ -130,7 +130,7 @@ readonly class UserService
 
         $passwordCheck = Hash::check($entry[self::KEY_PASSWORD], $user->password);
 
-        if (! $passwordCheck) {
+        if (!$passwordCheck) {
             Log::error(self::KEY_WRONG_PASSWORD_MESSAGE, [
                 self::KEY_ID => $user->id,
             ]);

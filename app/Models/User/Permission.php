@@ -38,6 +38,7 @@ class Permission extends Model
     {
         return $this->belongsToMany(Role::class, 'permission_role', 'permission_id', 'role_id', 'id', 'id', 'permissions')->withTimestamps();
     }
+
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(Permission::class, 'created_by', 'id', 'createdPermissions');

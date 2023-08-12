@@ -59,10 +59,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id', 'id', 'id', 'users')->withTimestamps();
     }
+
     public function createdRoles(): HasMany
     {
         return $this->hasMany(Role::class, 'created_by', 'id');
     }
+
     public function createdPermissions(): HasMany
     {
         return $this->hasMany(Permission::class, 'created_by', 'id');

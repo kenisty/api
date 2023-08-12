@@ -75,7 +75,7 @@ class UserDTO
         return $this->password;
     }
 
-    public function setIsCreatedByAnotherUser(?bool $isCreatedByAnotherUser): self
+    public function setIsCreatedByAnotherUser(bool $isCreatedByAnotherUser = false): self
     {
         $this->isCreatedByAnotherUser = $isCreatedByAnotherUser;
 

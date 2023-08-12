@@ -36,7 +36,7 @@ return $config->setRules([
         'no_trailing_comma_in_singleline_array' => true,
         'no_unused_imports' => true,
         'no_whitespace_in_blank_line' => true,
-        'not_operator_with_successor_space' => true,
+        'not_operator_with_successor_space' => false,
         'object_operator_without_whitespace' => true,
         'ordered_imports' => true,
         'phpdoc_indent' => true,

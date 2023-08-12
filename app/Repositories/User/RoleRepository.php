@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories\User;
 
 use App\Models\User\Role;
@@ -8,32 +10,32 @@ use Illuminate\Database\Eloquent\Collection;
 
 class RoleRepository extends RepositoryAbstractClass
 {
-    public function getAll(): Collection
+    protected function getAll(): Collection
     {
         return Role::all();
     }
 
-    public function find(string $id): Role|null
+    protected function find(string $id): Role|null
     {
         return Role::find($id);
     }
 
-    public function findByRole(string $role): Role|null
+    protected function findByRole(string $role): Role|null
     {
         return Role::where('role', $role)->first();
     }
 
-    public function create(mixed $entry): Role
+    protected function create(mixed $entry): Role
     {
         return Role::create($entry);
     }
 
-    public function update(string $id, mixed $entry): Role
+    protected function update(string $id, mixed $entry): Role
     {
         return Role::findOrFail($id)->update($entry);
     }
 
-    public function delete(string $id): void
+    protected function delete(string $id): void
     {
         Role::findOrFail($id)->delete();
     }

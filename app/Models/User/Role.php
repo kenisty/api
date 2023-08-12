@@ -39,10 +39,12 @@ class Role extends Model
     {
         return $this->belongsToMany(User::class, 'role_user', 'role_id', 'user_id', 'id', 'id', 'roles')->withTimestamps();
     }
+
     public function permissions(): BelongsToMany
     {
         return $this->belongsToMany(Permission::class, 'permission_role', 'role_id', 'permission_id', 'id', 'id', 'roles')->withTimestamps();
     }
+
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by', 'id', 'createdRoles');
