@@ -11,12 +11,11 @@ use App\Traits\ResponseTrait;
 use Exception;
 use Illuminate\Http\JsonResponse;
 
-class RegisterUserResponse extends AbstractResponse
+class LoginUserResponse extends AbstractResponse
 {
     use ResponseTrait;
 
-    // TODO: implement localization
-    private const USER_REGISTERED_MESSAGE = 'User registered successfully';
+    private const USER_LOGGED_IN_MESSAGE = 'Welcome back!';
 
     private const KEY_USER = 'user';
     private const KEY_FIRST_NAME = 'first_name';
@@ -43,9 +42,9 @@ class RegisterUserResponse extends AbstractResponse
     public function success(UserDTO $userDTO): JsonResponse
     {
         return $this->successResponse(
-            ResponseStatus::CREATED,
-            ResponseCode::ACCEPTED_AND_CREATED_CODE,
-            self::USER_REGISTERED_MESSAGE,
+            ResponseStatus::SUCCESS,
+            ResponseCode::ACCEPTED,
+            self::USER_LOGGED_IN_MESSAGE,
             $this->schema($userDTO)
         );
     }
@@ -53,7 +52,7 @@ class RegisterUserResponse extends AbstractResponse
     public function fail(Exception $exception): JsonResponse
     {
         return $this->failResponse(
-            ResponseStatus::RESOURCE_CREATION_FAILED,
+            ResponseStatus::FAILED,
             ResponseCode::BAD_REQUEST_CODE,
             $exception->getMessage(),
             config('app.env') === ENV::DEV->value
