@@ -11,15 +11,16 @@ class PermissionDTO
 {
     private ?string $permission = null;
 
-    /** @var array<Role>|null $roles */
+    /** @var array<Role>|null */
     private ?array $roles = null;
 
-    /** @var array<User>|null $users */
+    /** @var array<User>|null */
     private ?array $users = null;
 
     public function setPermission(?string $permission): self
     {
         $this->permission = $permission;
+
         return $this;
     }
 
@@ -31,6 +32,7 @@ class PermissionDTO
     public function setRoles(?array $roles): self
     {
         $this->roles = $roles;
+
         return $this;
     }
 
@@ -42,6 +44,7 @@ class PermissionDTO
     public function setUsers(?array $users): self
     {
         $this->users = $users;
+
         return $this;
     }
 

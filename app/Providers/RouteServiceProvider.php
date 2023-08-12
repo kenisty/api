@@ -18,6 +18,6 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
 
-        $this->routes(fn() => Route::middleware('api')->group(base_path('routes/api.php')));
+        $this->routes(fn () => Route::middleware('api')->group(base_path('routes/api.php')));
     }
 }

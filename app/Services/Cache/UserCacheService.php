@@ -11,7 +11,7 @@ class UserCacheService
 {
     public function setUserRolesCache(User $user): Collection
     {
-        return Cache::remember("user-{$user->id}-roles", config('cache.time_to_live'), fn() => $user->roles);
+        return Cache::remember("user-{$user->id}-roles", config('cache.time_to_live'), fn () => $user->roles);
     }
 
     public function removeUserRolesCache(User $user): void
@@ -22,7 +22,7 @@ class UserCacheService
     public function setUserPermissionsCache(User $user): Collection
     {
         return Cache::remember("user-{$user->id}-permissions", config('cache.time_to_live'), function () use ($user) {
-            return collect(array_map(fn(Role $role) => $role->permissions, $user->roles->toArray()));
+            return collect(array_map(fn (Role $role) => $role->permissions, $user->roles->toArray()));
         });
     }
 

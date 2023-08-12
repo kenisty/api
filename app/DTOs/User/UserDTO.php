@@ -21,15 +21,16 @@ class UserDTO
 
     private ?string $token = null;
 
-    /** @var array<Role>|null $roles */
+    /** @var array<Role>|null */
     private ?array $roles = null;
 
-    /** @var array<Permission>|null $permissions */
+    /** @var array<Permission>|null */
     private ?array $permissions = null;
 
     public function setFirstname(?string $firstname): self
     {
         $this->firstname = $firstname;
+
         return $this;
     }
 
@@ -41,6 +42,7 @@ class UserDTO
     public function setLastname(?string $lastname): self
     {
         $this->lastname = $lastname;
+
         return $this;
     }
 
@@ -52,6 +54,7 @@ class UserDTO
     public function setEmail(?string $email): self
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -63,6 +66,7 @@ class UserDTO
     public function setPassword(?string $password): self
     {
         $this->password = $password;
+
         return $this;
     }
 
@@ -74,6 +78,7 @@ class UserDTO
     public function setIsCreatedByAnotherUser(?bool $isCreatedByAnotherUser): self
     {
         $this->isCreatedByAnotherUser = $isCreatedByAnotherUser;
+
         return $this;
     }
 
@@ -85,6 +90,7 @@ class UserDTO
     public function setToken(?string $token): self
     {
         $this->token = $token;
+
         return $this;
     }
 
@@ -99,6 +105,7 @@ class UserDTO
     public function setRoles(?array $roles): self
     {
         $this->roles = $roles;
+
         return $this;
     }
 
@@ -116,6 +123,7 @@ class UserDTO
     public function setPermissions(?array $permissions): self
     {
         $this->permissions = $permissions;
+
         return $this;
     }
 

@@ -19,7 +19,10 @@ use Illuminate\Support\Collection;
  */
 class Permission extends Model
 {
-    use HasFactory, HasUuids, SoftDeletes, PruneModel;
+    use HasFactory;
+    use HasUuids;
+    use SoftDeletes;
+    use PruneModel;
 
     protected $connection = 'mysql';
     protected $table = 'permissions';
@@ -28,9 +31,15 @@ class Permission extends Model
 
     protected $fillable = [
         'permission',
-        'created_by'
+        'created_by',
     ];
 
-    public function roles(): BelongsToMany { return $this->belongsToMany(Role::class, 'permission_role', 'permission_id', 'role_id', 'id', 'id', 'permissions')->withTimestamps(); }
-    public function createdBy(): BelongsTo { return $this->belongsTo(Permission::class, 'created_by', 'id', 'createdPermissions'); }
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class, 'permission_role', 'permission_id', 'role_id', 'id', 'id', 'permissions')->withTimestamps();
+    }
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(Permission::class, 'created_by', 'id', 'createdPermissions');
+    }
 }
