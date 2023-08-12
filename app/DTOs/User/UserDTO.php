@@ -17,7 +17,7 @@ class UserDTO
 
     private ?string $password = null;
 
-    private bool $isRegistering = false;
+    private bool $isCreatedByAnotherUser = false;
 
     private ?string $token = null;
 
@@ -71,15 +71,15 @@ class UserDTO
         return $this->password;
     }
 
-    public function setIsRegistering(?bool $isRegistering): self
+    public function setIsCreatedByAnotherUser(?bool $isCreatedByAnotherUser): self
     {
-        $this->isRegistering = $isRegistering;
+        $this->isCreatedByAnotherUser = $isCreatedByAnotherUser;
         return $this;
     }
 
-    public function getIsRegistering(): bool
+    public function getIsCreatedByAnotherUser(): bool
     {
-        return $this->isRegistering;
+        return $this->isCreatedByAnotherUser;
     }
 
     public function setToken(?string $token): self

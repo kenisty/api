@@ -10,21 +10,19 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-class RegisterUserRequest extends FormRequest
+class LoginUserRequest extends FormRequest
 {
     use ResponseTrait;
 
-    private const VALIDATION_FAILED_MESSAGE = 'Registering failed.';
+    private const VALIDATION_FAILED_MESSAGE = 'Login failed.';
 
     public function authorize(): bool { return true; }
 
     public function rules(): array
     {
         return [
-            'first_name' => ['required', 'string', 'min:3', 'max:255'],
-            'last_name' => ['required', 'string', 'min:3', 'max:255'],
-            'email' => ['required', 'email', Rule::unique('users', 'email'), 'min:3', 'max:255'],
-            'password' => ['required', 'string', 'confirmed', 'min:8', 'max:255'],
+            'email' => ['required', 'email', Rule::exists('users', 'email')],
+            'password' => ['required', 'string'],
         ];
     }
 
