@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Collection;
 
 abstract class RepositoryAbstractClass
 {
-    abstract protected function getAll(): Collection;
+    abstract public function getAll(): Collection;
 
-    abstract protected function find(string $id): mixed;
+    abstract public function find(string $id): mixed;
 
-    abstract protected function create(mixed $entry): mixed;
+    abstract public function create(mixed $entry): mixed;
 
-    abstract protected function update(string $id, mixed $entry): mixed;
+    abstract public function update(string $id, mixed $entry): mixed;
 
-    abstract protected function delete(string $id): void;
+    abstract public function delete(string $id): void;
 }
