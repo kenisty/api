@@ -16,7 +16,7 @@ class RegisterUserResponse extends AbstractResponse
     use ResponseTrait;
 
     // TODO: implement localization
-    private const USER_REGISTERED_MESSAGE = 'User registered successfully';
+    private const USER_REGISTERED_MESSAGE = 'register.response.success.message';
 
     private const KEY_USER = 'user';
     private const KEY_FIRST_NAME = 'first_name';
@@ -45,7 +45,7 @@ class RegisterUserResponse extends AbstractResponse
         return $this->successResponse(
             ResponseStatus::CREATED,
             ResponseCode::ACCEPTED_AND_CREATED_CODE,
-            self::USER_REGISTERED_MESSAGE,
+            __(self::USER_REGISTERED_MESSAGE),
             $this->schema($userDTO)
         );
     }

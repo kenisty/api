@@ -15,7 +15,7 @@ class LoginUserResponse extends AbstractResponse
 {
     use ResponseTrait;
 
-    private const USER_LOGGED_IN_MESSAGE = 'Welcome back!';
+    private const USER_LOGGED_IN_MESSAGE = 'login.response.success.message';
 
     private const KEY_USER = 'user';
     private const KEY_FIRST_NAME = 'first_name';
@@ -44,7 +44,7 @@ class LoginUserResponse extends AbstractResponse
         return $this->successResponse(
             ResponseStatus::SUCCESS,
             ResponseCode::ACCEPTED,
-            self::USER_LOGGED_IN_MESSAGE,
+            __(self::USER_LOGGED_IN_MESSAGE),
             $this->schema($userDTO)
         );
     }

@@ -1,0 +1,28 @@
+{
+    "register.request.fail.message": "Registering failed.",
+    "register.response.success.message": "You have been successfully registered! Please proceed to verify your account.",
+
+    "register.request.fail.first_name.required.message": "Please provide your first name.",
+    "register.request.fail.first_name.string.message": "Please enter a valid first name.",
+    "register.request.fail.first_name.min.message": "Your first name cannot be less than :min characters.",
+    "register.request.fail.first_name.max.message": "Your first name cannot exceed :max characters.",
+
+    "register.request.fail.last_name.required.message": "Please provide your last name.",
+    "register.request.fail.last_name.string.message": "Please enter a valid last name.",
+    "register.request.fail.last_name.min.message": "Your last name cannot be less than :min characters.",
+    "register.request.fail.last_name.max.message": "Your last name cannot exceed :max characters.",
+
+    "register.request.fail.email.required.message": "Please provide your email.",
+    "register.request.fail.email.email.message": "Please enter a valid email address.",
+    "register.request.fail.email.unique.message": "This email address is already in use. Please use a different email.",
+    "register.request.fail.email.min.message": "Email address should be at least :min characters.",
+    "register.request.fail.email.max.message": "Email address should not exceed :max characters.",
+
+    "register.request.fail.password.required.message": "A password is required. Please enter a password.",
+    "register.request.fail.password.string.message": "Please enter a valid password.",
+    "register.request.fail.password.confirmed.message": "Password confirmation does not match.",
+    "register.request.fail.password.min.message": "The password should be at least :min characters long.",
+    "register.request.fail.password.max.message": "The password should not exceed :max characters.",
+
+    "login.response.success.message": "Welcome back!"
+}

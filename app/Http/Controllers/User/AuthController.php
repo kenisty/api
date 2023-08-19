@@ -63,8 +63,7 @@ class AuthController extends Controller
 
         $userDTO = (new UserDTO())
             ->setEmail($data[self::KEY_EMAIL])
-            ->setPassword($data[self::KEY_PASSWORD])
-            ->setIsCreatedByAnotherUser(false);
+            ->setPassword($data[self::KEY_PASSWORD]);
 
         try {
             $loggedInUserDTO = $this->userService->loginUser($userDTO);
