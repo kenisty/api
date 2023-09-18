@@ -43,13 +43,13 @@ readonly class UserService
     /**
      * @throws Exception|UserAlreadyExistsException
      */
-    public function createUser(UserDTO $userDTO): UserDTO
+    public function createUser(array $data): UserDTO
     {
         $entry = [
-            self::KEY_FIRST_NAME => $userDTO->getFirstname(),
-            self::KEY_LAST_NAME => $userDTO->getLastname(),
-            self::KEY_EMAIL => $userDTO->getEmail(),
-            self::KEY_PASSWORD => Hash::make($userDTO->getPassword()),
+            self::KEY_FIRST_NAME => $data[self::KEY_FIRST_NAME],
+            self::KEY_LAST_NAME => $data[self::KEY_LAST_NAME],
+            self::KEY_EMAIL => $data[self::KEY_EMAIL],
+            self::KEY_PASSWORD => Hash::make($data[self::KEY_PASSWORD]),
         ];
 
         $user = $this->userRepository->findByEmail($entry[self::KEY_EMAIL]);
@@ -69,8 +69,8 @@ readonly class UserService
                 self::KEY_ID => $user->id,
             ]);
 
-            $this->assignUserDefaultRole($user); // TODO: return role
-            $token = $this->assignUserToken($user, $userDTO->getIsCreatedByAnotherUser());
+            $this->assignUserDefaultRole($user);
+            $token = $this->assignUserToken($user, false);
         } catch (Exception $exception) {
             Log::error($exception->getMessage(), [
                 self::KEY_EXCEPTION => $exception->getTraceAsString(),

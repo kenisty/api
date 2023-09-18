@@ -3,8 +3,6 @@
 namespace App\Http\Requests\User;
 
 use App\Enum\ResponseCode;
-use App\Enum\ResponseStatus;
-use App\Traits\ResponseTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -12,8 +10,6 @@ use Illuminate\Validation\Rule;
 
 class RegisterUserRequest extends FormRequest
 {
-    use ResponseTrait;
-
     private const VALIDATION_FAILED_MESSAGE = 'register.request.fail.message';
 
     private const FIRST_NAME_REQUIRED_VALIDATION_FAILED = 'register.request.fail.first_name.required.message';
@@ -88,8 +84,7 @@ class RegisterUserRequest extends FormRequest
     protected function failedValidation(Validator $validator): void
     {
         $response = $this->failResponse(
-            ResponseStatus::VALIDATION_FAILED,
-            ResponseCode::VALIDATION_FAILED_CODE,
+            ResponseCode::VALIDATION_FAILED,
             __(self::VALIDATION_FAILED_MESSAGE),
             $validator->errors()
         );

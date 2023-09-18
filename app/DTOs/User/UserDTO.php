@@ -4,28 +4,50 @@ declare(strict_types=1);
 
 namespace App\DTOs\User;
 
-use App\Models\User\Permission;
-use App\Models\User\Role;
+use App\DTOs\DefaultDTOInterface;
 
-class UserDTO
+final readonly class UserDTO implements DefaultDTOInterface
 {
-    private ?string $firstname = null;
+    private const KEY_TOKEN = 'token';
+    private const KEY_FIRST_NAME = 'firstName';
+    private const KEY_LAST_NAME = 'lastName';
+    private const KEY_EMAIL = 'email';
 
-    private ?string $lastname = null;
+    private ?string $token;
+    private ?string $firstname;
+    private ?string $lastname;
+    private ?string $email;
 
-    private ?string $email = null;
+    public function toArray(): array
+    {
+        return [
+            self::KEY_TOKEN => $this->getToken(),
+            self::KEY_FIRST_NAME => $this->getFirstname(),
+            self::KEY_LAST_NAME => $this->getLastname(),
+            self::KEY_EMAIL => $this->getEmail(),
+        ];
+    }
 
-    private ?string $password = null;
+    public function fromArray(array $data): UserDTO
+    {
+        return (new self())
+            ->setToken($data[self::KEY_TOKEN] ?? null)
+            ->setFirstname($data[self::KEY_FIRST_NAME] ?? null)
+            ->setLastname($data[self::KEY_LAST_NAME] ?? null)
+            ->setEmail($data[self::KEY_EMAIL] ?? null);
+    }
 
-    private bool $isCreatedByAnotherUser = false;
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
 
-    private ?string $token = null;
+        return $this;
+    }
 
-    /** @var array<Role>|null */
-    private ?array $roles = null;
-
-    /** @var array<Permission>|null */
-    private ?array $permissions = null;
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
 
     public function setFirstname(?string $firstname): self
     {
@@ -61,77 +83,5 @@ class UserDTO
     public function getEmail(): ?string
     {
         return $this->email;
-    }
-
-    public function setPassword(?string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setIsCreatedByAnotherUser(bool $isCreatedByAnotherUser = false): self
-    {
-        $this->isCreatedByAnotherUser = $isCreatedByAnotherUser;
-
-        return $this;
-    }
-
-    public function getIsCreatedByAnotherUser(): bool
-    {
-        return $this->isCreatedByAnotherUser;
-    }
-
-    public function setToken(?string $token): self
-    {
-        $this->token = $token;
-
-        return $this;
-    }
-
-    public function getToken(): ?string
-    {
-        return $this->token;
-    }
-
-    /**
-     * @param array<Role> $roles
-     */
-    public function setRoles(?array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
-     * @return array<Role>|null
-     */
-    public function getRoles(): ?array
-    {
-        return $this->roles;
-    }
-
-    /**
-     * @param array<Permission> $permissions
-     */
-    public function setPermissions(?array $permissions): self
-    {
-        $this->permissions = $permissions;
-
-        return $this;
-    }
-
-    /**
-     * @return array<Permission>|null
-     */
-    public function getPermissions(): ?array
-    {
-        return $this->permissions;
     }
 }
