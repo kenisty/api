@@ -3,13 +3,14 @@
 namespace App\DTOs\Exception;
 
 use App\DTOs\DefaultDTOInterface;
+use App\Enum\ResponseCode;
 
 final readonly class ExceptionDTO implements DefaultDTOInterface
 {
     private const KEY_CODE = 'code';
     private const KEY_MESSAGE = 'message';
 
-    private ?int $code;
+    private ?ResponseCode $code;
     private ?string $message;
 
     /**
@@ -30,14 +31,14 @@ final readonly class ExceptionDTO implements DefaultDTOInterface
             ->setMessage($data[self::KEY_MESSAGE] ?? null);
     }
 
-    public function setCode(?int $code): self
+    public function setCode(?ResponseCode $code): self
     {
         $this->code = $code;
 
         return $this;
     }
 
-    public function getCode(): ?int
+    public function getCode(): ?ResponseCode
     {
         return $this->code;
     }

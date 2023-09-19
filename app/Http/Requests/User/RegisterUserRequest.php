@@ -3,6 +3,7 @@
 namespace App\Http\Requests\User;
 
 use App\Enum\ResponseCode;
+use App\Http\Responses\User\UserFailedRegistrationResponse;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -83,12 +84,11 @@ class RegisterUserRequest extends FormRequest
 
     protected function failedValidation(Validator $validator): void
     {
-        $response = $this->failResponse(
-            ResponseCode::VALIDATION_FAILED,
-            __(self::VALIDATION_FAILED_MESSAGE),
-            $validator->errors()
-        );
+        $response = (new UserFailedRegistrationResponse())
+            ->setResponseCode(ResponseCode::VALIDATION_FAILED)
+            ->setMessageTranslationKey(self::VALIDATION_FAILED_MESSAGE)
+            ->setData($validator->errors()->toArray());
 
-        throw new HttpResponseException($response);
+        throw new HttpResponseException($response->getResponse());
     }
 }

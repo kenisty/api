@@ -2,35 +2,13 @@
 
 namespace App\Http\Responses\User;
 
+use App\DTOs\DefaultDTOInterface;
 use App\Enum\ResponseCode;
 use App\Http\Responses\Abstract\AbstractResponse;
 
 class UserFailedRegistrationResponse extends AbstractResponse
 {
-    private string $messageTranslationKey = 'register.response.fail.message';
-    private ResponseCode $responseCode = ResponseCode::BAD_REQUEST;
-
-    protected function setResponseCode(ResponseCode $responseCode): self
-    {
-        $this->responseCode = $responseCode;
-
-        return $this;
-    }
-
-    protected function getResponseCode(): ResponseCode
-    {
-        return $this->responseCode;
-    }
-
-    protected function setMessageTranslationKey(string $key): self
-    {
-        $this->messageTranslationKey = $key;
-
-        return $this;
-    }
-
-    protected function getMessageTranslationKey(): ?string
-    {
-        return $this->messageTranslationKey;
-    }
+    protected ?string $messageTranslationKey = 'register.response.fail.message';
+    protected ?ResponseCode $responseCode = ResponseCode::BAD_REQUEST;
+    protected ?DefaultDTOInterface $dto = null;
 }

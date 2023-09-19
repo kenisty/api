@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\User;
 
 use App\DTOs\Exception\ExceptionDTO;
+use App\Enum\ResponseCode;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\LoginUserRequest;
 use App\Http\Requests\User\RegisterUserRequest;
@@ -43,14 +44,17 @@ class AuthController extends Controller
         try {
             $createdUserDTO = $this->userService->createUser($data);
         } catch (Exception $exception) {
-            $exceptionDTO = (new ExceptionDTO())
-                ->setCode($exception->getCode())
-                ->setMessage($exception->getMessage());
-
-            return (new UserFailedRegistrationResponse())->getResponse($exceptionDTO);
+            return (new UserFailedRegistrationResponse())
+                ->setDto((new ExceptionDTO())
+                    ->setCode(ResponseCode::tryFrom($exception->getCode()))
+                    ->setMessage($exception->getMessage())
+                )->getResponse();
         }
 
-        return (new UserSuccessfulRegistrationResponse())->getResponse($createdUserDTO);
+        return (new UserSuccessfulRegistrationResponse())
+            ->setResponseCode(ResponseCode::ACCEPTED_AND_CREATED)
+            ->setDto($createdUserDTO)
+            ->getResponse();
     }
 
     /**
@@ -66,13 +70,16 @@ class AuthController extends Controller
         try {
             $loggedInUserDTO = $this->userService->loginUser($data);
         } catch (Exception  $exception) {
-            $exceptionDTO = (new ExceptionDTO())
-                ->setCode($exception->getCode())
-                ->setMessage($exception->getMessage());
-
-            return (new UserFailedLoginResponse())->getResponse($exceptionDTO);
+            return (new UserFailedLoginResponse())
+                ->setDto((new ExceptionDTO())
+                    ->setCode(ResponseCode::tryFrom($exception->getCode()))
+                    ->setMessage($exception->getMessage())
+                )->getResponse();
         }
 
-         return (new UserSuccessLoginResponse())->getResponse($loggedInUserDTO);
+         return (new UserSuccessLoginResponse())
+             ->setResponseCode(ResponseCode::ACCEPTED)
+             ->setDto($loggedInUserDTO)
+             ->getResponse();
     }
 }

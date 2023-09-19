@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\User;
 
+use App\DTOs\Exception\ExceptionDTO;
 use App\Enum\ResponseCode;
+use App\Http\Responses\User\UserFailedLoginResponse;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -27,12 +29,11 @@ class LoginUserRequest extends FormRequest
 
     protected function failedValidation(Validator $validator): void
     {
-        $response = $this->failResponse(
-            ResponseCode::VALIDATION_FAILED,
-            self::VALIDATION_FAILED_MESSAGE,
-            $validator->errors()
-        );
+        $response = (new UserFailedLoginResponse())
+            ->setResponseCode(ResponseCode::VALIDATION_FAILED)
+            ->setMessageTranslationKey(self::VALIDATION_FAILED_MESSAGE)
+            ->setData($validator->errors()->toArray());
 
-        throw new HttpResponseException($response);
+        throw new HttpResponseException($response->getResponse());
     }
 }

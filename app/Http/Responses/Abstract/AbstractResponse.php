@@ -4,7 +4,6 @@ namespace App\Http\Responses\Abstract;
 
 use App\DTOs\DefaultDTOInterface;
 use App\Enum\ResponseCode;
-use Exception;
 use Illuminate\Http\JsonResponse;
 
 abstract class AbstractResponse
@@ -12,17 +11,75 @@ abstract class AbstractResponse
     protected const KEY_MESSAGE = 'message';
     protected const KEY_DATA = 'data';
 
-    abstract protected function getResponseCode(): ResponseCode;
-    abstract protected function getMessageTranslationKey(): ?string;
+    protected ?string $messageTranslationKey = null;
+    protected ?ResponseCode $responseCode = null;
+    protected ?DefaultDTOInterface $dto = null;
+    protected array $data = [];
 
-    /**
-     * @throws Exception
-     */
-    public function getResponse(DefaultDTOInterface $dto): JsonResponse
+    public function setResponseCode(?ResponseCode $code): self
     {
-        return response()->json([
-            self::KEY_MESSAGE => trans($this->getMessageTranslationKey()),
-            self::KEY_DATA => $dto->toArray(),
-        ], $this->getResponseCode()->value);
+        $this->responseCode = $code;
+
+        return $this;
+    }
+
+    protected function getResponseCode(): ?ResponseCode
+    {
+        return $this->responseCode;
+    }
+
+    public function setMessageTranslationKey(?string $messageKey): self
+    {
+        $this->messageTranslationKey = $messageKey;
+
+        return $this;
+    }
+
+    protected function getMessageTranslationKey(): ?string
+    {
+        return $this->messageTranslationKey;
+    }
+
+    public function setDto(?DefaultDTOInterface $dto): self
+    {
+        $this->dto = $dto;
+
+        return $this;
+    }
+
+    protected function getDto(): ?DefaultDTOInterface
+    {
+        return $this->dto;
+    }
+
+    public function setData(array $data): self
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    protected function getData(): array
+    {
+        return $this->data;
+    }
+
+    public function getResponse(): JsonResponse
+    {
+        $messageTranslationKey = $this->getMessageTranslationKey();
+        $data = $this->getDto()?->toArray() ?? $this->getData() ?? [];
+        $responseCode = $this->getResponseCode()?->value ?? 418;
+
+        $responseArray = [];
+
+        if ($messageTranslationKey !== null) {
+            $responseArray[self::KEY_MESSAGE] = trans($messageTranslationKey);
+        }
+
+        if (count($data) !== 0) {
+            $responseArray[self::KEY_DATA] = $data;
+        }
+
+        return response()->json($responseArray, $responseCode);
     }
 }
