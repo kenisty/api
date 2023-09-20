@@ -10,9 +10,9 @@ return new class extends Migration
     {
         Schema::create('role_user', static function (Blueprint $table): void {
             $table->id();
-            $table->foreignUuid('role_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignUuid('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignUuid('assigned_by')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignId('role_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('assigned_by')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->timestamps();
         });
     }

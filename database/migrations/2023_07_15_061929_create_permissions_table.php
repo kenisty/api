@@ -9,9 +9,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('permissions', static function (Blueprint $table): void {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('permission')->unique()->index();
-            $table->foreignUuid('created_by')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignId('created_by')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

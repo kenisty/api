@@ -3,8 +3,7 @@
 namespace App\Models\User;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Traits\PruneModel;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use App\Models\Traits\PruneModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -17,17 +16,12 @@ class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
-    use HasUuids;
     use Notifiable;
-    use PruneModel;
+    use PruneModelTrait;
 
     protected $connection = 'mysql';
 
     protected $table = 'users';
-
-    public $incrementing = false;
-
-    protected $keyType = 'string';
 
     protected $fillable = [
         'first_name',

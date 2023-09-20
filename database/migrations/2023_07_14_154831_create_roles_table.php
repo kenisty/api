@@ -9,9 +9,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('roles', static function (Blueprint $table): void {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('role')->unique()->index();
-            $table->foreignUuid('created_by')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignId('created_by')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

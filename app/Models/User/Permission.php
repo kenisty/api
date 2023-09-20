@@ -2,8 +2,7 @@
 
 namespace App\Models\User;
 
-use App\Traits\PruneModel;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use App\Models\Traits\PruneModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,17 +19,12 @@ use Illuminate\Support\Collection;
 class Permission extends Model
 {
     use HasFactory;
-    use HasUuids;
     use SoftDeletes;
-    use PruneModel;
+    use PruneModelTrait;
 
     protected $connection = 'mysql';
 
     protected $table = 'permissions';
-
-    public $incrementing = false;
-
-    protected $keyType = 'string';
 
     protected $fillable = [
         'permission',
