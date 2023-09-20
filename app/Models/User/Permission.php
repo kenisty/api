@@ -37,6 +37,11 @@ class Permission extends Model
         'created_by',
     ];
 
+    public function __toString(): string
+    {
+        return self::class . ' #' . $this->id;
+    }
+
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'permission_role', 'permission_id', 'role_id', 'id', 'id', 'permissions')->withTimestamps();

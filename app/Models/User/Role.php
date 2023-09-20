@@ -38,6 +38,11 @@ class Role extends Model
         'created_by',
     ];
 
+    public function __toString(): string
+    {
+        return self::class . ' #' . $this->id;
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'role_user', 'role_id', 'user_id', 'id', 'id', 'roles')->withTimestamps();

@@ -11,9 +11,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Stringable;
 
-class User extends Authenticatable implements Stringable
+
+class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
@@ -45,6 +45,11 @@ class User extends Authenticatable implements Stringable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function __toString(): string
+    {
+        return self::class . ' #' . $this->id;
+    }
 
     public function roles(): BelongsToMany
     {
