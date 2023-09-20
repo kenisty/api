@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Database\Factories\User;
 
@@ -22,6 +22,6 @@ class UserFactory extends Factory
 
     public function unverified(): static
     {
-        return $this->state(fn(array $attributes) => ['email_verified_at' => null]);
+        return $this->state(static fn(array $attributes) => ['email_verified_at' => null]);
     }
 }

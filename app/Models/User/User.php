@@ -1,10 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Models\User;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Traits\PruneModel;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -12,20 +11,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Stringable;
 
-/**
- * @property string $id
- * @property string $first_name
- * @property string $last_name
- * @property string $email
- * @property string $password
- * @property string $remember_token
- * @property string $email_verified_at
- * @property Collection<Role> $roles
- * @property Collection<Role> $createdRoles
- * @property Collection<Permission> $createdPermissions
- */
-class User extends Authenticatable
+class User extends Authenticatable implements Stringable
 {
     use HasApiTokens;
     use HasFactory;
@@ -34,8 +22,11 @@ class User extends Authenticatable
     use PruneModel;
 
     protected $connection = 'mysql';
+
     protected $table = 'users';
+
     public $incrementing = false;
+
     protected $keyType = 'string';
 
     protected $fillable = [

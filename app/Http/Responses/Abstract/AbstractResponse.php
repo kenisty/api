@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Http\Responses\Abstract;
 
@@ -12,8 +12,11 @@ abstract class AbstractResponse
     protected const KEY_DATA = 'data';
 
     protected ?string $messageTranslationKey = null;
+
     protected ?ResponseCode $responseCode = null;
+
     protected ?DefaultDTOInterface $dto = null;
+
     protected array $data = [];
 
     public function setResponseCode(?ResponseCode $code): self

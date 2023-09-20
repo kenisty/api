@@ -1,8 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Http\Requests\User;
 
-use App\DTOs\Exception\ExceptionDTO;
 use App\Enum\ResponseCode;
 use App\Http\Responses\User\UserFailedLoginResponse;
 use Illuminate\Contracts\Validation\Validator;

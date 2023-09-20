@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Http\Responses\User;
 
@@ -9,6 +9,8 @@ use App\Http\Responses\Abstract\AbstractResponse;
 class UserSuccessfulRegistrationResponse extends AbstractResponse
 {
     protected ?string $messageTranslationKey = 'register.response.success.message';
+
     protected ?ResponseCode $responseCode = ResponseCode::ACCEPTED;
+
     protected ?DefaultDTOInterface $dto = null;
 }

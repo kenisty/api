@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Models\User;
 
@@ -26,8 +26,11 @@ class Role extends Model
     use PruneModel;
 
     protected $connection = 'mysql';
+
     protected $table = 'roles';
+
     public $incrementing = false;
+
     protected $keyType = 'string';
 
     protected $fillable = [

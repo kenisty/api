@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Models\User;
 
@@ -25,8 +25,11 @@ class Permission extends Model
     use PruneModel;
 
     protected $connection = 'mysql';
+
     protected $table = 'permissions';
+
     public $incrementing = false;
+
     protected $keyType = 'string';
 
     protected $fillable = [
@@ -41,6 +44,6 @@ class Permission extends Model
 
     public function createdBy(): BelongsTo
     {
-        return $this->belongsTo(Permission::class, 'created_by', 'id', 'createdPermissions');
+        return $this->belongsTo(self::class, 'created_by', 'id', 'createdPermissions');
     }
 }

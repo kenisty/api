@@ -30,7 +30,7 @@ readonly class UserService
 
     private const KEY_DUPLICATE_USER_MESSAGE = 'Duplicate email found. User creation failed.';
     private const KEY_USER_CREATED_MESSAGE = 'User successfully created in the database.';
-    private const KEY_USER_ASSIGNED_DEFAULT_ROLE_MESSAGE = 'Default role ['.self::KEY_DEFAULT_ROLE.'] assigned to the user in the database.';
+    private const KEY_USER_ASSIGNED_DEFAULT_ROLE_MESSAGE = 'Default role [' . self::KEY_DEFAULT_ROLE . '] assigned to the user in the database.';
     private const KEY_USER_NOT_FOUND_MESSAGE = 'User not found. Login failed.';
     private const KEY_WRONG_PASSWORD_MESSAGE = 'Wrong password. Login failed.';
 
@@ -59,7 +59,7 @@ readonly class UserService
                 self::KEY_EMAIL => $entry[self::KEY_EMAIL],
             ]);
 
-            throw new UserAlreadyExistsException();
+            throw new UserAlreadyExistsException;
         }
 
         try {

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\DTOs\Exception;
 
@@ -11,6 +11,7 @@ final readonly class ExceptionDTO implements DefaultDTOInterface
     private const KEY_MESSAGE = 'message';
 
     private ?ResponseCode $code;
+
     private ?string $message;
 
     /**
@@ -24,7 +25,7 @@ final readonly class ExceptionDTO implements DefaultDTOInterface
         ];
     }
 
-    public function fromArray(array $data): ExceptionDTO
+    public function fromArray(array $data): self
     {
         return (new self())
             ->setCode($data[self::KEY_CODE] ?? null)

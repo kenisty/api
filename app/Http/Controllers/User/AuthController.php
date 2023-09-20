@@ -45,9 +45,10 @@ class AuthController extends Controller
             $createdUserDTO = $this->userService->createUser($data);
         } catch (Exception $exception) {
             return (new UserFailedRegistrationResponse())
-                ->setDto((new ExceptionDTO())
-                    ->setCode(ResponseCode::tryFrom($exception->getCode()))
-                    ->setMessage($exception->getMessage())
+                ->setDto(
+                    (new ExceptionDTO())
+                        ->setCode(ResponseCode::tryFrom($exception->getCode()))
+                        ->setMessage($exception->getMessage()),
                 )->getResponse();
         }
 
@@ -71,9 +72,10 @@ class AuthController extends Controller
             $loggedInUserDTO = $this->userService->loginUser($data);
         } catch (Exception  $exception) {
             return (new UserFailedLoginResponse())
-                ->setDto((new ExceptionDTO())
-                    ->setCode(ResponseCode::tryFrom($exception->getCode()))
-                    ->setMessage($exception->getMessage())
+                ->setDto(
+                    (new ExceptionDTO())
+                        ->setCode(ResponseCode::tryFrom($exception->getCode()))
+                        ->setMessage($exception->getMessage()),
                 )->getResponse();
         }
 

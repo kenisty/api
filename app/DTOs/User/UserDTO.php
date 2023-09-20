@@ -14,8 +14,11 @@ final readonly class UserDTO implements DefaultDTOInterface
     private const KEY_EMAIL = 'email';
 
     private ?string $token;
+
     private ?string $firstname;
+
     private ?string $lastname;
+
     private ?string $email;
 
     public function toArray(): array
@@ -28,7 +31,7 @@ final readonly class UserDTO implements DefaultDTOInterface
         ];
     }
 
-    public function fromArray(array $data): UserDTO
+    public function fromArray(array $data): self
     {
         return (new self())
             ->setToken($data[self::KEY_TOKEN] ?? null)

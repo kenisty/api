@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Database\Seeders\User;
 
@@ -25,7 +25,8 @@ class PermissionSeeder extends Seeder
     private function generateCRUDPermissionsForModel(string $modelName): array
     {
         $actions = ['Create', 'Read', 'Update', 'Delete', 'Force_Delete', 'Restore'];
-        return array_map(fn(string $action) => strtoupper("{$action}_$modelName"), $actions);
+
+        return array_map(static fn(string $action) => mb_strtoupper("{$action}_$modelName"), $actions);
     }
 
     private function getModels(): array
@@ -35,11 +36,11 @@ class PermissionSeeder extends Seeder
         $recursiveIteratorIterator = new RecursiveIteratorIterator($directoryRecursiveIterator);
 
         return array_map(
-            fn(SplFileInfo $file) => explode('.', $file->getBasename())[0],
+            static fn(SplFileInfo $file) => explode('.', $file->getBasename())[0],
             array_filter(
                 iterator_to_array($recursiveIteratorIterator),
-                fn(SplFileInfo $file) => is_file($file),
-            )
+                static fn(SplFileInfo $file) => is_file($file),
+            ),
         );
     }
 }

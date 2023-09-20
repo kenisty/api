@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Repositories\User;
 
 use App\Models\User\User;
-use App\Repositories\RepositoryAbstractClass;
+use App\Repositories\DefaultRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
-class UserRepository extends RepositoryAbstractClass
+class UserRepository implements DefaultRepositoryInterface
 {
     public function getAll(): Collection
     {

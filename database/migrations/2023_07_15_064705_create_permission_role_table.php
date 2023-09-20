@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('permission_role', function (Blueprint $table) {
+        Schema::create('permission_role', static function (Blueprint $table): void {
             $table->id();
             $table->foreignUuid('permission_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignUuid('role_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();

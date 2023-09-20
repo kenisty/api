@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Http\Responses\User;
 
@@ -9,6 +9,8 @@ use App\Http\Responses\Abstract\AbstractResponse;
 class UserFailedRegistrationResponse extends AbstractResponse
 {
     protected ?string $messageTranslationKey = 'register.response.fail.message';
+
     protected ?ResponseCode $responseCode = ResponseCode::BAD_REQUEST;
+
     protected ?DefaultDTOInterface $dto = null;
 }

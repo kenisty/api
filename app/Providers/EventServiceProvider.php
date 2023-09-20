@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Providers;
 
@@ -19,6 +19,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot(): void
     {
     }
+
     public function shouldDiscoverEvents(): bool
     {
         return false;
