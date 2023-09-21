@@ -11,7 +11,7 @@ use Illuminate\Validation\Rule;
 
 class LoginUserRequest extends FormRequest
 {
-    private const VALIDATION_FAILED_MESSAGE = 'Login failed.';
+    private const VALIDATION_FAILED_MESSAGE = 'auth.login.failed.response.message';
 
     private const EMAIL_REQUIRED_VALIDATION_FAILED = 'auth.login.failed.request.email.required';
     private const EMAIL_EXISTS_VALIDATION_FAILED = 'auth.login.failed.request.email.exists';
