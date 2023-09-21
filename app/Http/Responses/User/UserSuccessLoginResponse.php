@@ -8,7 +8,7 @@ use App\Http\Responses\Abstract\AbstractResponse;
 
 class UserSuccessLoginResponse extends AbstractResponse
 {
-    protected ?string $messageTranslationKey = 'login.response.success.message';
+    protected ?string $messageTranslationKey = 'auth.login.success.response.message';
 
     protected ?ResponseCode $responseCode = ResponseCode::ACCEPTED;
 

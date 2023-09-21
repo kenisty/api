@@ -8,7 +8,7 @@ use App\Http\Responses\Abstract\AbstractResponse;
 
 class UserFailedLoginResponse extends AbstractResponse
 {
-    protected ?string $messageTranslationKey = 'login.response.fail.message';
+    protected ?string $messageTranslationKey = 'auth.login.failed.response.message';
 
     protected ?ResponseCode $responseCode = ResponseCode::BAD_REQUEST;
 

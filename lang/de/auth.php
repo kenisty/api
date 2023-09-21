@@ -1,7 +1,6 @@
 <?php declare(strict_types=1);
 
 return [
-
     'register' => [
         'success' => [
             'response' => [
@@ -43,7 +42,27 @@ return [
         ],
     ],
 
-    # 'failed' => 'These credentials do not match our records.',
-    # 'password' => 'The provided password is incorrect.',
-    # 'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'login' => [
+        'success' => [
+            'response' => [
+                'message' => 'Willkommen zurück!',
+            ],
+        ],
+        'failed' => [
+            'request' => [
+                'email' => [
+                    'required' => 'Bitte gib deine E-Mail-Adresse an.',
+                    'email' => 'Bitte gib eine gültige E-Mail-Adresse ein.',
+                    'exists' => 'Die angegebenen Anmeldeinformationen stimmen mit keiner unserer Datensätze überein.',
+                ],
+                'password' => [
+                    'required' => 'Ein Passwort ist erforderlich. Bitte gib ein Passwort ein.',
+                    'string' => 'Bitte gib ein gültiges Passwort ein.',
+                ],
+            ],
+            'response' => [
+                'message' => 'Entschuldigung, etwas ist schiefgegangen, während wir versuchen, dich zu registrieren!',
+            ],
+        ],
+    ],
 ];

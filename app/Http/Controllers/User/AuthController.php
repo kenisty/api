@@ -42,7 +42,7 @@ class AuthController extends Controller
         ]);
 
         try {
-            $createdUserDTO = $this->userService->createUser($data);
+            $createdUserDTO = $this->userService->registerUser($data);
         } catch (Exception $exception) {
             return (new UserFailedRegistrationResponse())
                 ->setDto(

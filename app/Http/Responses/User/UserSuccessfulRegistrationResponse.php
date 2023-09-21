@@ -8,7 +8,7 @@ use App\Http\Responses\Abstract\AbstractResponse;
 
 class UserSuccessfulRegistrationResponse extends AbstractResponse
 {
-    protected ?string $messageTranslationKey = 'register.response.success.message';
+    protected ?string $messageTranslationKey = 'auth.register.success.response.message';
 
     protected ?ResponseCode $responseCode = ResponseCode::ACCEPTED;
 

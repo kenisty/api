@@ -1,7 +1,6 @@
 <?php declare(strict_types=1);
 
 return [
-
     'register' => [
         'success' => [
             'response' => [
@@ -43,7 +42,27 @@ return [
         ],
     ],
 
-    # 'failed' => 'These credentials do not match our records.',
-    # 'password' => 'The provided password is incorrect.',
-    # 'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'login' => [
+        'success' => [
+            'response' => [
+                'message' => 'Welcome back!',
+            ],
+        ],
+        'failed' => [
+            'request' => [
+                'email' => [
+                    'required' => 'Please provide your email.',
+                    'email' => 'Please enter a valid email address.',
+                    'exists' => 'The given credentials don\'t match any of our records.',
+                ],
+                'password' => [
+                    'required' => 'A password is required. Please enter a password.',
+                    'string' => 'Please enter a valid password.',
+                ],
+            ],
+            'response' => [
+                'message' => 'Sorry, something went wrong, while we are trying to log you in!',
+            ],
+        ],
+    ],
 ];
