@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -34,6 +35,6 @@ class Localization
 
     private function getSupportedLanguages(): array
     {
-        return collect(File::directories(lang_path()))->map(static fn ($directory) => explode(lang_path() . '\\', $directory)[1])->toArray();
+        return Cache::remember('localization.supported_languages', now()->addMonths(3), static fn() => collect(File::directories(lang_path()))->map(static fn ($directory) => explode(lang_path() . '\\', $directory)[1])->toArray());
     }
 }
