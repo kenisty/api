@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\User;
 
-use App\DTOs\User\UserDTO;
+use App\DTOs\Exception\ExceptionDTO;
+use App\Enum\ResponseCode;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\LoginUserRequest;
 use App\Http\Requests\User\RegisterUserRequest;
-use App\Http\Responses\User\LoginUserResponse;
-use App\Http\Responses\User\RegisterUserResponse;
+use App\Http\Responses\User\UserFailedLoginResponse;
+use App\Http\Responses\User\UserFailedRegistrationResponse;
+use App\Http\Responses\User\UserSuccessfulRegistrationResponse;
+use App\Http\Responses\User\UserSuccessLoginResponse;
 use App\Services\User\UserService;
-use App\Traits\ResponseTrait;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AuthController extends Controller
 {
-    use ResponseTrait;
-
     private const KEY_FIRST_NAME = 'first_name';
     private const KEY_LAST_NAME = 'last_name';
     private const KEY_EMAIL = 'email';
@@ -29,6 +29,9 @@ class AuthController extends Controller
     ) {
     }
 
+    /**
+     * @throws Exception
+     */
     public function register(RegisterUserRequest $request): JsonResponse
     {
         $data = $request->safe([
@@ -38,22 +41,26 @@ class AuthController extends Controller
             self::KEY_PASSWORD,
         ]);
 
-        $userDTO = (new UserDTO())
-            ->setFirstname($data[self::KEY_FIRST_NAME])
-            ->setLastname($data[self::KEY_LAST_NAME])
-            ->setEmail($data[self::KEY_EMAIL])
-            ->setPassword($data[self::KEY_PASSWORD])
-            ->setIsCreatedByAnotherUser(false);
-
         try {
-            $createdUserDTO = $this->userService->createUser($userDTO);
+            $createdUserDTO = $this->userService->registerUser($data);
         } catch (Exception $exception) {
-            return (new RegisterUserResponse())->fail($exception);
+            return (new UserFailedRegistrationResponse())
+                ->setDto(
+                    (new ExceptionDTO())
+                        ->setCode(ResponseCode::tryFrom($exception->getCode()))
+                        ->setMessage($exception->getMessage()),
+                )->getResponse();
         }
 
-        return (new RegisterUserResponse())->success($createdUserDTO);
+        return (new UserSuccessfulRegistrationResponse())
+            ->setResponseCode(ResponseCode::ACCEPTED_AND_CREATED)
+            ->setDto($createdUserDTO)
+            ->getResponse();
     }
 
+    /**
+     * @throws Exception
+     */
     public function login(LoginUserRequest $request): JsonResponse
     {
         $data = $request->safe([
@@ -61,17 +68,20 @@ class AuthController extends Controller
             self::KEY_PASSWORD,
         ]);
 
-        $userDTO = (new UserDTO())
-            ->setEmail($data[self::KEY_EMAIL])
-            ->setPassword($data[self::KEY_PASSWORD])
-            ->setIsCreatedByAnotherUser(false);
-
         try {
-            $loggedInUserDTO = $this->userService->loginUser($userDTO);
+            $loggedInUserDTO = $this->userService->loginUser($data);
         } catch (Exception  $exception) {
-            return (new LoginUserResponse())->fail($exception);
+            return (new UserFailedLoginResponse())
+                ->setDto(
+                    (new ExceptionDTO())
+                        ->setCode(ResponseCode::tryFrom($exception->getCode()))
+                        ->setMessage($exception->getMessage()),
+                )->getResponse();
         }
 
-         return (new LoginUserResponse())->success($loggedInUserDTO);
+         return (new UserSuccessLoginResponse())
+             ->setResponseCode(ResponseCode::ACCEPTED)
+             ->setDto($loggedInUserDTO)
+             ->getResponse();
     }
 }

@@ -1,41 +1,39 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Repositories\User;
 
 use App\Models\User\Role;
-use App\Repositories\RepositoryAbstractClass;
+use App\Repositories\DefaultRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
-class RoleRepository extends RepositoryAbstractClass
+class RoleRepository implements DefaultRepositoryInterface
 {
-    protected function getAll(): Collection
+    public function getAll(): Collection
     {
         return Role::all();
     }
 
-    protected function find(string $id): Role|null
+    public function find(string $id): mixed
     {
         return Role::find($id);
     }
 
-    protected function findByRole(string $role): Role|null
+    public function findByRole(string $role): mixed
     {
         return Role::where('role', $role)->first();
     }
 
-    protected function create(mixed $entry): Role
+    public function create(mixed $entry): mixed
     {
         return Role::create($entry);
     }
 
-    protected function update(string $id, mixed $entry): Role
+    public function update(string $id, mixed $entry): mixed
     {
         return Role::findOrFail($id)->update($entry);
     }
 
-    protected function delete(string $id): void
+    public function delete(string $id): void
     {
         Role::findOrFail($id)->delete();
     }

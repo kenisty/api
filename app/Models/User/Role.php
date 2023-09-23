@@ -1,9 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Models\User;
 
-use App\Traits\PruneModel;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use App\Models\Traits\PruneModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,19 +20,22 @@ use Illuminate\Support\Collection;
 class Role extends Model
 {
     use HasFactory;
-    use HasUuids;
     use SoftDeletes;
-    use PruneModel;
+    use PruneModelTrait;
 
     protected $connection = 'mysql';
+
     protected $table = 'roles';
-    public $incrementing = false;
-    protected $keyType = 'string';
 
     protected $fillable = [
         'role',
         'created_by',
     ];
+
+    public function __toString(): string
+    {
+        return self::class . ' #' . $this->id;
+    }
 
     public function users(): BelongsToMany
     {

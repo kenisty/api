@@ -1,9 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Models\User;
 
-use App\Traits\PruneModel;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use App\Models\Traits\PruneModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,19 +19,22 @@ use Illuminate\Support\Collection;
 class Permission extends Model
 {
     use HasFactory;
-    use HasUuids;
     use SoftDeletes;
-    use PruneModel;
+    use PruneModelTrait;
 
     protected $connection = 'mysql';
+
     protected $table = 'permissions';
-    public $incrementing = false;
-    protected $keyType = 'string';
 
     protected $fillable = [
         'permission',
         'created_by',
     ];
+
+    public function __toString(): string
+    {
+        return self::class . ' #' . $this->id;
+    }
 
     public function roles(): BelongsToMany
     {
@@ -41,6 +43,6 @@ class Permission extends Model
 
     public function createdBy(): BelongsTo
     {
-        return $this->belongsTo(Permission::class, 'created_by', 'id', 'createdPermissions');
+        return $this->belongsTo(self::class, 'created_by', 'id', 'createdPermissions');
     }
 }

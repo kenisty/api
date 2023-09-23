@@ -1,27 +1,28 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Services\User;
 
-use App\DTOs\User\UserDTO;
-use App\Models\User\Permission;
-use Illuminate\Database\Eloquent\Collection;
+use App\Models\User\User;
+use App\Repositories\User\RoleRepository;
+use Illuminate\Support\Facades\Log;
 
-class RoleService
+readonly class RoleService
 {
-    public function checkUserPermission(UserDTO $user, string $action): bool
+    private const KEY_ID = 'id';
+    private const KEY_DEFAULT_ROLE = 'user';
+    private const KEY_USER_ASSIGNED_DEFAULT_ROLE_MESSAGE = 'Default role [' . self::KEY_DEFAULT_ROLE . '] assigned to the user in the database.';
+
+    public function __construct(
+        private RoleRepository $roleRepository,
+    ) {
+    }
+
+    public function assignUserDefaultRole(User $user): void
     {
-        /** @var Collection<array-key, Permission> $permissions */
-        $permissions = $user->getPermissions();
+        $defaultRole = $this->roleRepository->findByRole(self::KEY_DEFAULT_ROLE);
 
-        if (count($permissions) === 0) {
-            return false;
-        }
+        $user->roles()->attach($defaultRole);
 
-        $permissions = array_filter(
-            $permissions->toArray(),
-            static fn (Permission $permission): bool => $permission->permission === $action
-        );
-
-        return count($permissions) > 0;
+        Log::info(self::KEY_USER_ASSIGNED_DEFAULT_ROLE_MESSAGE, [self::KEY_ID => $user->id]);
     }
 }

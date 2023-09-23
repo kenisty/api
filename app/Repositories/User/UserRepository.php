@@ -5,37 +5,37 @@ declare(strict_types=1);
 namespace App\Repositories\User;
 
 use App\Models\User\User;
-use App\Repositories\RepositoryAbstractClass;
+use App\Repositories\DefaultRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
-class UserRepository extends RepositoryAbstractClass
+class UserRepository implements DefaultRepositoryInterface
 {
-    protected function getAll(): Collection
+    public function getAll(): Collection
     {
         return User::all();
     }
 
-    protected function find(string $id): User|null
+    public function find(string $id): User|null
     {
         return User::find($id);
     }
 
-    protected function findByEmail(string $email): User|null
+    public function findByEmail(string $email): User|null
     {
         return User::where('email', $email)->first();
     }
 
-    protected function create(mixed $entry): User
+    public function create(mixed $entry): User
     {
         return User::create($entry);
     }
 
-    protected function update(string $id, mixed $entry): User
+    public function update(string $id, mixed $entry): User
     {
         return User::findOrFail($id)->update($entry);
     }
 
-    protected function delete(string $id): void
+    public function delete(string $id): void
     {
         User::findOrFail($id)->delete();
     }

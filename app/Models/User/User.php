@@ -1,11 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Models\User;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Traits\PruneModel;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use App\Models\Traits\PruneModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,30 +11,17 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-/**
- * @property string $id
- * @property string $first_name
- * @property string $last_name
- * @property string $email
- * @property string $password
- * @property string $remember_token
- * @property string $email_verified_at
- * @property Collection<Role> $roles
- * @property Collection<Role> $createdRoles
- * @property Collection<Permission> $createdPermissions
- */
+
 class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
-    use HasUuids;
     use Notifiable;
-    use PruneModel;
+    use PruneModelTrait;
 
     protected $connection = 'mysql';
+
     protected $table = 'users';
-    public $incrementing = false;
-    protected $keyType = 'string';
 
     protected $fillable = [
         'first_name',
@@ -54,6 +39,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function __toString(): string
+    {
+        return self::class . ' #' . $this->id;
+    }
 
     public function roles(): BelongsToMany
     {

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Providers;
 
@@ -15,7 +15,7 @@ class RouteServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        RateLimiter::for('api', function (Request $request) {
+        RateLimiter::for('api', static function (Request $request) {
             $user = $request->user();
 
             if (!$user instanceof User) {
@@ -25,6 +25,6 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(60)->by($user->id);
         });
 
-        $this->routes(fn () => Route::middleware('api')->group(base_path('routes/api.php')));
+        $this->routes(static fn () => Route::middleware('api')->group(base_path('routes/api.php')));
     }
 }
