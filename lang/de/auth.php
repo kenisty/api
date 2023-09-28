@@ -36,9 +36,6 @@ return [
                     'max' => 'Das Passwort darf nicht mehr als :max Zeichen haben.',
                 ],
             ],
-            'response' => [
-                'message' => 'Entschuldigung, etwas ist schiefgegangen, während wir versuchen, dich zu registrieren!',
-            ],
         ],
     ],
 
@@ -59,9 +56,6 @@ return [
                     'required' => 'Ein Passwort ist erforderlich. Bitte gib ein Passwort ein.',
                     'string' => 'Bitte gib ein gültiges Passwort ein.',
                 ],
-            ],
-            'response' => [
-                'message' => 'Entschuldigung, etwas ist schiefgegangen, während wir versuchen, dich zu registrieren!',
             ],
         ],
     ],

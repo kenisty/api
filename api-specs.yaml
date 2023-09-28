@@ -1,0 +1,131 @@
+openapi: 3.0.3
+info:
+  title: Kenisty API
+  description: The main entry point for Kenisty project.
+  version: 1.0.0
+  contact:
+    name: Pola Eskandar
+    email: eskandar.pola@codingstreamer.com
+    url: https://codingstreamer.com
+servers:
+  - url: 'http://localhost:8080'
+    description: 'Development Server'
+  - url: 'https://kenisty.com'
+    description: 'Production Server'
+paths:
+  /v1/auth/register:
+    post:
+      responses:
+        201:
+          description: 'Successfully registered a new user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSuccessfullyRegistered'
+        422:
+          description: 'Failed validation.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserFailedRegistration'
+        500:
+          description: 'Internal Server Error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exception'
+
+  /v1/auth/login:
+    post:
+      responses:
+        200:
+          description: 'Successfully logged in an existing user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSuccessfullyLoggedIn'
+        422:
+          description: 'Failed validation.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserFailedLoggingIn'
+        500:
+          description: 'Internal Server Error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exception'
+
+components:
+  schemas:
+    UserSuccessfullyRegistered:
+      description: 'Successful user registration schema'
+      type: object
+      properties:
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/AuthData'
+
+    UserSuccessfullyLoggedIn:
+      description: 'Successful user logging in schema'
+      type: object
+      properties:
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/AuthData'
+
+    AuthData:
+      description: 'Successful authentication data'
+      type: object
+      properties:
+        token:
+          type: string
+          minLength: 3
+          maxLength: 255
+        firstName:
+          type: string
+          minLength: 3
+          maxLength: 255
+        lastName:
+          type: string
+          minLength: 3
+          maxLength: 255
+        email:
+          type: string
+          minLength: 3
+          maxLength: 255
+
+    UserFailedRegistration:
+      description: 'Failed user registration schema'
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          $ref: '#/components/schemas/ValidationFailedExceptionData'
+
+    UserFailedLoggingIn:
+      description: 'Failed user logging in schema'
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          $ref: '#/components/schemas/ValidationFailedExceptionData'
+
+    ValidationFailedExceptionData:
+      description: 'Failed validation schema'
+      type: object
+
+    Exception:
+      description: 'Something went wrong'
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: integer
+          default: 500

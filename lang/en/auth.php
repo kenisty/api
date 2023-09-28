@@ -36,9 +36,6 @@ return [
                     'max' => 'The password should not exceed :max characters.',
                 ],
             ],
-            'response' => [
-                'message' => 'Sorry, something went wrong, while we are trying to register you!',
-            ],
         ],
     ],
 
@@ -59,9 +56,6 @@ return [
                     'required' => 'A password is required. Please enter a password.',
                     'string' => 'Please enter a valid password.',
                 ],
-            ],
-            'response' => [
-                'message' => 'Sorry, something went wrong, while we are trying to log you in!',
             ],
         ],
     ],
