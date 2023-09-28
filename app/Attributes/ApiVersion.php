@@ -7,5 +7,5 @@ use Attribute;
 #[Attribute]
 class ApiVersion
 {
-    public function __construct(public int $since, public int $until) { }
+    public function __construct(public int $since, public ?int $until = null) { }
 }

@@ -40,7 +40,7 @@ class Controller extends BaseController
 
         $arguments = $attribute->getArguments();
         $sinceVersion = $arguments['since'];
-        $untilVersion = $arguments['until'];
+        $untilVersion = $arguments['until'] ?? 99999;
         $currentVersion = $this->getApiVersionFromRequestUri($requestUri);
 
         if ($sinceVersion > $untilVersion) {

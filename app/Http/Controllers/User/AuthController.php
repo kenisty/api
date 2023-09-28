@@ -17,7 +17,7 @@ use OpenAPI\Client\Kenisty\Exception as ServerException;
 use OpenAPI\Client\Kenisty\UserSuccessfullyLoggedIn;
 use OpenAPI\Client\Kenisty\UserSuccessfullyRegistered;
 
-#[ApiVersion(since: 1, until: 1)]
+#[ApiVersion(since: 1)]
 class AuthController extends Controller
 {
     public const AUTH_LOGIN_SUCCESS_RESPONSE_MESSAGE = 'auth.login.success.response.message';
