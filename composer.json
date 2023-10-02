@@ -10,7 +10,8 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
-        "laravel/tinker": "^2.8"
+        "laravel/tinker": "^2.8",
+        "zircote/swagger-php": "^4.7"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -39,7 +40,11 @@
     "scripts": {
         "fix": "vendor/bin/php-cs-fixer fix -v --config=.php-cs-fixer.php",
         "md": "vendor/bin/phpmd ./app ./config ./database ./lang ./routes xml ./phpmd.xml --color",
-        "generate": "openapi-generator-cli generate -i ./api-specs.yaml -g php -o vendor/kenisty/ --api-package Kenisty --model-package Kenisty",
+        "generate": [
+            "./vendor/bin/openapi app -o api-specs.yaml",
+            "rm -rf vendor/kenisty/",
+            "openapi-generator-cli generate -i ./api-specs.yaml -g php -o vendor/kenisty/ --api-package Kenisty --model-package Kenisty"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

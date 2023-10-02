@@ -2,23 +2,29 @@
 
 declare(strict_types=1);
 
-namespace App\DTOs\User;
+namespace App\DTOs\Schemas;
 
 use App\DTOs\DefaultDTOInterface;
+use OpenApi\Attributes as OA;
 
-final readonly class UserDTO implements DefaultDTOInterface
+#[OA\Schema(schema: 'UserDataV1', title: 'UserDataV1')]
+final readonly class UserDataV1 implements DefaultDTOInterface
 {
     private const KEY_TOKEN = 'token';
-    private const KEY_FIRST_NAME = 'firstName';
-    private const KEY_LAST_NAME = 'lastName';
+    private const KEY_FIRST_NAME = 'firstname';
+    private const KEY_LAST_NAME = 'lastname';
     private const KEY_EMAIL = 'email';
 
+    #[OA\Property(type: 'string')]
     private ?string $token;
 
+    #[OA\Property(type: 'string')]
     private ?string $firstname;
 
+    #[OA\Property(type: 'string')]
     private ?string $lastname;
 
+    #[OA\Property(type: 'string')]
     private ?string $email;
 
     public function toArray(): array

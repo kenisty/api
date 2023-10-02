@@ -4,40 +4,37 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\User;
 
-use App\Attributes\ApiVersion;
 use App\Enum\ResponseCode;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\LoginUserRequest;
 use App\Http\Requests\User\RegisterUserRequest;
 use App\Services\User\UserService;
 use Exception;
-use Illuminate\Http\Request;
-use OpenAPI\Client\Kenisty\AuthData;
-use OpenAPI\Client\Kenisty\Exception as ServerException;
-use OpenAPI\Client\Kenisty\UserSuccessfullyLoggedIn;
-use OpenAPI\Client\Kenisty\UserSuccessfullyRegistered;
+use OpenApi\Attributes as OA;
+use OpenAPI\Client\Kenisty\ServerExceptionWriteV1;
+use OpenAPI\Client\Kenisty\UserDataV1;
+use OpenAPI\Client\Kenisty\UserRegisterWriteV1;
 
-#[ApiVersion(since: 1)]
-class AuthController extends Controller
+class AuthControllerV1 extends Controller
 {
     public const AUTH_LOGIN_SUCCESS_RESPONSE_MESSAGE = 'auth.login.success.response.message';
     private const AUTH_REGISTER_SUCCESS_RESPONSE_MESSAGE = 'auth.register.success.response.message';
-    private const KEY_FIRST_NAME = 'first_name';
-    private const KEY_LAST_NAME = 'last_name';
+    private const KEY_FIRST_NAME = 'firstname';
+    private const KEY_LAST_NAME = 'lastname';
     private const KEY_EMAIL = 'email';
     private const KEY_PASSWORD = 'password';
 
-    public function __construct(
-        private readonly UserService $userService,
-        private readonly Request $request,
-    ) {
-        parent::__construct(self::class, $this->request->getUri());
-    }
+    public function __construct(private readonly UserService $userService) { }
 
-    /**
-     * @throws Exception
-     */
-    public function register(RegisterUserRequest $request): UserSuccessfullyRegistered|ServerException
+    #[OA\Post(
+        path: '/v1/auth/register',
+        requestBody: new OA\RequestBody(content: new OA\JsonContent(ref: '#/components/schemas/UserRegisterReadV1')),
+        responses: [
+            new OA\Response(response: 201, description: 'Successfully logged in an existing user.', content: new OA\JsonContent(ref: '#/components/schemas/UserRegisterWriteV1')),
+            new OA\Response(response: 422, description: 'Failed validation.'),
+        ],
+    )]
+    public function register(RegisterUserRequest $request): UserRegisterWriteV1|ServerExceptionWriteV1
     {
         $data = $request->safe([
             self::KEY_FIRST_NAME,
@@ -49,15 +46,15 @@ class AuthController extends Controller
         try {
             $createdUserDTO = $this->userService->registerUser($data);
         } catch (Exception $exception) {
-            return (new ServerException())
-                ->setCode(ResponseCode::tryFrom($exception->getCode()))
+            return (new ServerExceptionWriteV1())
+                ->setCode($exception->getCode())
                 ->setMessage($exception->getMessage());
         }
 
-        return (new UserSuccessfullyRegistered())
+        return (new UserRegisterWriteV1())
             ->setMessage(trans(self::AUTH_REGISTER_SUCCESS_RESPONSE_MESSAGE))
             ->setData(
-                (new AuthData())
+                (new UserDataV1())
                     ->setToken($createdUserDTO->getToken())
                     ->setFirstName($createdUserDTO->getFirstname())
                     ->setLastName($createdUserDTO->getLastname())
@@ -68,7 +65,7 @@ class AuthController extends Controller
     /**
      * @throws Exception
      */
-    public function login(LoginUserRequest $request): UserSuccessfullyLoggedIn|ServerException
+    public function login(LoginUserRequest $request): UserSuccessfullyLoggedIn|ServerExceptionWriteV1
     {
         $data = $request->safe([
             self::KEY_EMAIL,
@@ -78,7 +75,7 @@ class AuthController extends Controller
         try {
             $loggedInUserDTO = $this->userService->loginUser($data);
         } catch (Exception  $exception) {
-            return (new ServerException())
+            return (new ServerExceptionWriteV1())
                 ->setCode(ResponseCode::tryFrom($exception->getCode()))
                 ->setMessage($exception->getMessage());
         }
