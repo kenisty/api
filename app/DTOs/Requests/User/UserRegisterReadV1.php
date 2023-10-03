@@ -4,7 +4,7 @@ namespace App\DTOs\Requests\User;
 
 use OpenApi\Attributes as OA;
 
-#[OA\Schema(schema: 'UserRegisterReadV1', title: 'UserRegisterReadV1')]
+#[OA\Schema(schema: 'UserRegisterReadV1', title: 'UserRegisterReadV1', description: 'Request schema for registering a new user V1')]
 final readonly class UserRegisterReadV1
 {
     #[OA\Property(property: 'firstname', title: 'Firstname', type: 'string', maxLength: 255, minLength: 3, nullable: false)]

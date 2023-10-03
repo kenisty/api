@@ -5,7 +5,7 @@ namespace App\DTOs\Responses\User;
 use App\DTOs\Schemas\User\UserDataV1;
 use OpenApi\Attributes as OA;
 
-#[OA\Schema(schema: 'UserLoginWriteV1', title: 'UserLoginWriteV1')]
+#[OA\Schema(schema: 'UserLoginWriteV1', title: 'UserLoginWriteV1', description: 'Response schema for successfully logging in an existing user V1.')]
 final readonly class UserLoginWriteV1
 {
     #[OA\Property(type: 'string')]

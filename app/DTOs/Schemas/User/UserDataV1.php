@@ -7,7 +7,7 @@ namespace App\DTOs\Schemas\User;
 use App\DTOs\DefaultDTOInterface;
 use OpenApi\Attributes as OA;
 
-#[OA\Schema(schema: 'UserDataV1', title: 'UserDataV1')]
+#[OA\Schema(schema: 'UserDataV1', title: 'UserDataV1', description: 'A schema containing all the user data, that should be sent as a response.')]
 final readonly class UserDataV1 implements DefaultDTOInterface
 {
     private const KEY_TOKEN = 'token';

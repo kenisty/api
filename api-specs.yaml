@@ -64,6 +64,7 @@ components:
       type: object
     UserRegisterReadV1:
       title: UserRegisterReadV1
+      description: 'Request schema for registering an new user V1'
       properties:
         firstname:
           title: Firstname
