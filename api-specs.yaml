@@ -52,6 +52,7 @@ components:
   schemas:
     UserLoginReadV1:
       title: UserLoginReadV1
+      description: 'Request schema for logging in a user V1.'
       properties:
         email:
           title: Email
@@ -64,7 +65,7 @@ components:
       type: object
     UserRegisterReadV1:
       title: UserRegisterReadV1
-      description: 'Request schema for registering an new user V1'
+      description: 'Request schema for registering a new user V1'
       properties:
         firstname:
           title: Firstname
@@ -99,6 +100,7 @@ components:
       type: object
     ServerExceptionWriteV1:
       title: ServerExceptionWriteV1
+      description: 'Response schema for a generic server error V1.'
       properties:
         code:
           type: integer
@@ -107,6 +109,7 @@ components:
       type: object
     UserLoginWriteV1:
       title: UserLoginWriteV1
+      description: 'Response schema for successfully logging in an existing user V1.'
       properties:
         message:
           type: string
@@ -115,6 +118,7 @@ components:
       type: object
     UserRegisterWriteV1:
       title: UserRegisterWriteV1
+      description: 'Response schema for successfully registering a new user V1.'
       properties:
         message:
           type: string
@@ -123,6 +127,7 @@ components:
       type: object
     UserDataV1:
       title: UserDataV1
+      description: 'A schema containing all the user data, that should be sent as a response.'
       properties:
         token:
           type: string
