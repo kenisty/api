@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\User;
 
-use App\DTOs\User\UserDTO;
+use App\DTOs\Schemas\User\UserDataV1;
 use App\Exceptions\User\InvalidPasswordException;
 use App\Exceptions\User\UserAlreadyExistsException;
 use App\Exceptions\User\UserNotFoundException;
@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Log;
 readonly class UserService
 {
     private const KEY_ID = 'id';
-    private const KEY_FIRST_NAME = 'first_name';
-    private const KEY_LAST_NAME = 'last_name';
+    private const KEY_FIRST_NAME = 'firstname';
+    private const KEY_LAST_NAME = 'lastname';
     private const KEY_EMAIL = 'email';
     private const KEY_PASSWORD = 'password';
     private const KEY_EXCEPTION = 'exception';
@@ -38,7 +38,7 @@ readonly class UserService
     /**
      * @throws Exception|UserAlreadyExistsException
      */
-    public function registerUser(array $data): UserDTO
+    public function registerUser(array $data): UserDataV1
     {
         $entry = [
             self::KEY_FIRST_NAME => $data[self::KEY_FIRST_NAME],
@@ -66,17 +66,17 @@ readonly class UserService
             throw $exception;
         }
 
-        return (new UserDTO())
-            ->setFirstname($user->first_name)
-            ->setLastname($user->last_name)
-            ->setEmail($user->email)
-            ->setToken($token);
+        return (new UserDataV1())
+            ->setToken($token)
+            ->setFirstname($user->firstname)
+            ->setLastname($user->lastname)
+            ->setEmail($user->email);
     }
 
     /**
      * @throws Exception|InvalidPasswordException|UserNotFoundException
      */
-    public function loginUser(array $data): UserDTO
+    public function loginUser(array $data): UserDataV1
     {
         $entry = [
             self::KEY_EMAIL => $data[self::KEY_EMAIL],
@@ -107,7 +107,7 @@ readonly class UserService
             throw $exception;
         }
 
-        return (new UserDTO())
+        return (new UserDataV1())
             ->setFirstname($user->first_name)
             ->setLastname($user->last_name)
             ->setEmail($user->email)

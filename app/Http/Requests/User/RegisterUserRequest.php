@@ -2,17 +2,11 @@
 
 namespace App\Http\Requests\User;
 
-use App\Enum\ResponseCode;
-use App\Http\Responses\User\UserFailedRegistrationResponse;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
 class RegisterUserRequest extends FormRequest
 {
-    private const VALIDATION_FAILED_MESSAGE = 'auth.register.failed.response.message';
-
     private const FIRST_NAME_REQUIRED_VALIDATION_FAILED = 'auth.register.failed.request.firstName.required';
     private const FIRST_NAME_STRING_VALIDATION_FAILED = 'auth.register.failed.request.firstName.string';
     private const FIRST_NAME_MIN_VALIDATION_FAILED = 'auth.register.failed.request.firstName.min';
@@ -43,8 +37,8 @@ class RegisterUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => ['required', 'string', 'min:3', 'max:255'],
-            'last_name' => ['required', 'string', 'min:3', 'max:255'],
+            'firstname' => ['required', 'string', 'min:3', 'max:255'],
+            'lastname' => ['required', 'string', 'min:3', 'max:255'],
             'email' => ['required', 'email', Rule::unique('users', 'email'), 'min:3', 'max:255'],
             'password' => ['required', 'string', 'confirmed', 'min:8', 'max:255'],
         ];
@@ -80,15 +74,5 @@ class RegisterUserRequest extends FormRequest
                 'max' => trans(self::PASSWORD_MAX_VALIDATION_FAILED),
             ],
         ];
-    }
-
-    protected function failedValidation(Validator $validator): void
-    {
-        $response = (new UserFailedRegistrationResponse())
-            ->setResponseCode(ResponseCode::VALIDATION_FAILED)
-            ->setMessageTranslationKey(self::VALIDATION_FAILED_MESSAGE)
-            ->setData($validator->errors()->toArray());
-
-        throw new HttpResponseException($response->getResponse());
     }
 }
