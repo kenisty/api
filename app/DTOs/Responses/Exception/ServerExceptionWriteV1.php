@@ -3,7 +3,7 @@
 namespace App\DTOs\Responses\Exception;
 use OpenApi\Attributes as OA;
 
-#[OA\Schema(schema: 'ServerExceptionWriteV1', title: 'ServerExceptionWriteV1')]
+#[OA\Schema(schema: 'ServerExceptionWriteV1', title: 'ServerExceptionWriteV1', description: 'Response schema for a generic server error V1.')]
 class ServerExceptionWriteV1
 {
     #[OA\Property(type: 'integer')]
