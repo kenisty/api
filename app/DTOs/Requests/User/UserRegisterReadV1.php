@@ -1,11 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace App\DTOs\Requests;
+namespace App\DTOs\Requests\User;
 
 use OpenApi\Attributes as OA;
 
 #[OA\Schema(schema: 'UserRegisterReadV1', title: 'UserRegisterReadV1')]
-final readonly class UserRegisterReadV1 {
+final readonly class UserRegisterReadV1
+{
     #[OA\Property(property: 'firstname', title: 'Firstname', type: 'string', maxLength: 255, minLength: 3, nullable: false)]
     private ?string $firstname;
 

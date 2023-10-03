@@ -12,6 +12,8 @@ info:
 paths:
   /v1/auth/register:
     post:
+      tags:
+        - Authentication
       operationId: 557dcb2ee3dfdae1e150def5ea1f831c
       requestBody:
         content:
@@ -20,15 +22,46 @@ paths:
               $ref: '#/components/schemas/UserRegisterReadV1'
       responses:
         '201':
-          description: 'Successfully logged in an existing user.'
+          description: 'Successfully registered a new user.'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserRegisterWriteV1'
         '422':
           description: 'Failed validation.'
+  /v1/auth/login:
+    post:
+      tags:
+        - Authentication
+      operationId: d4c4c6392927052c421daac9d0a1c2fc
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLoginReadV1'
+      responses:
+        '201':
+          description: 'Successfully logged in an existing user.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLoginWriteV1'
+        '422':
+          description: 'Failed validation.'
 components:
   schemas:
+    UserLoginReadV1:
+      title: UserLoginReadV1
+      properties:
+        email:
+          title: Email
+          type: string
+          nullable: false
+        password:
+          title: Password
+          type: string
+          nullable: false
+      type: object
     UserRegisterReadV1:
       title: UserRegisterReadV1
       properties:
@@ -70,6 +103,14 @@ components:
           type: integer
         message:
           type: string
+      type: object
+    UserLoginWriteV1:
+      title: UserLoginWriteV1
+      properties:
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/UserDataV1'
       type: object
     UserRegisterWriteV1:
       title: UserRegisterWriteV1

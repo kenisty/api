@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DTOs\Schemas;
+namespace App\DTOs\Schemas\User;
 
 use App\DTOs\DefaultDTOInterface;
 use OpenApi\Attributes as OA;

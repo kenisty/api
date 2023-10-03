@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\User;
 
-use App\Enum\ResponseCode;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\LoginUserRequest;
 use App\Http\Requests\User\RegisterUserRequest;
@@ -13,6 +12,7 @@ use Exception;
 use OpenApi\Attributes as OA;
 use OpenAPI\Client\Kenisty\ServerExceptionWriteV1;
 use OpenAPI\Client\Kenisty\UserDataV1;
+use OpenAPI\Client\Kenisty\UserLoginWriteV1;
 use OpenAPI\Client\Kenisty\UserRegisterWriteV1;
 
 class AuthControllerV1 extends Controller
@@ -29,8 +29,9 @@ class AuthControllerV1 extends Controller
     #[OA\Post(
         path: '/v1/auth/register',
         requestBody: new OA\RequestBody(content: new OA\JsonContent(ref: '#/components/schemas/UserRegisterReadV1')),
+        tags: ['Authentication'],
         responses: [
-            new OA\Response(response: 201, description: 'Successfully logged in an existing user.', content: new OA\JsonContent(ref: '#/components/schemas/UserRegisterWriteV1')),
+            new OA\Response(response: 201, description: 'Successfully registered a new user.', content: new OA\JsonContent(ref: '#/components/schemas/UserRegisterWriteV1')),
             new OA\Response(response: 422, description: 'Failed validation.'),
         ],
     )]
@@ -62,10 +63,16 @@ class AuthControllerV1 extends Controller
             );
     }
 
-    /**
-     * @throws Exception
-     */
-    public function login(LoginUserRequest $request): UserSuccessfullyLoggedIn|ServerExceptionWriteV1
+    #[OA\Post(
+        path: '/v1/auth/login',
+        requestBody: new OA\RequestBody(content: new OA\JsonContent(ref: '#/components/schemas/UserLoginReadV1')),
+        tags: ['Authentication'],
+        responses: [
+            new OA\Response(response: 201, description: 'Successfully logged in an existing user.', content: new OA\JsonContent(ref: '#/components/schemas/UserLoginWriteV1')),
+            new OA\Response(response: 422, description: 'Failed validation.'),
+        ],
+    )]
+    public function login(LoginUserRequest $request): UserLoginWriteV1|ServerExceptionWriteV1
     {
         $data = $request->safe([
             self::KEY_EMAIL,
@@ -76,14 +83,14 @@ class AuthControllerV1 extends Controller
             $loggedInUserDTO = $this->userService->loginUser($data);
         } catch (Exception  $exception) {
             return (new ServerExceptionWriteV1())
-                ->setCode(ResponseCode::tryFrom($exception->getCode()))
+                ->setCode($exception->getCode())
                 ->setMessage($exception->getMessage());
         }
 
-         return (new UserSuccessfullyLoggedIn())
+         return (new UserLoginWriteV1())
              ->setMessage(trans(self::AUTH_LOGIN_SUCCESS_RESPONSE_MESSAGE))
              ->setData(
-                 (new AuthData())
+                 (new UserDataV1())
                      ->setToken($loggedInUserDTO->getToken())
                      ->setFirstName($loggedInUserDTO->getFirstname())
                      ->setLastName($loggedInUserDTO->getLastname())
