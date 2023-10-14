@@ -28,6 +28,9 @@ class AuthControllerV1 extends Controller
 
     #[OA\Post(
         path: '/v1/auth/register',
+        description: 'Request for registering new users in. Returns a status code of 201 if the user was able to successfully register attached with an authentication token.',
+        summary: 'A request to register a new user.',
+        security: [],
         requestBody: new OA\RequestBody(content: new OA\JsonContent(ref: '#/components/schemas/UserRegisterReadV1')),
         tags: ['Authentication'],
         responses: [
@@ -65,10 +68,13 @@ class AuthControllerV1 extends Controller
 
     #[OA\Post(
         path: '/v1/auth/login',
+        description: 'Request for logging existing users in. Returns a status code of 200 if the user was able to successfully login in attached with an authentication token.',
+        summary: 'A request to login a user.',
+        security: [],
         requestBody: new OA\RequestBody(content: new OA\JsonContent(ref: '#/components/schemas/UserLoginReadV1')),
         tags: ['Authentication'],
         responses: [
-            new OA\Response(response: 201, description: 'Successfully logged in an existing user.', content: new OA\JsonContent(ref: '#/components/schemas/UserLoginWriteV1')),
+            new OA\Response(response: 200, description: 'Successfully logged in an existing user.', content: new OA\JsonContent(ref: '#/components/schemas/UserLoginWriteV1')),
             new OA\Response(response: 422, description: 'Failed validation.'),
         ],
     )]

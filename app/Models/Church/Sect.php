@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Models\Church;
 
@@ -8,15 +8,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Sect extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     protected $connection = 'mysql';
+
     protected $table = 'sects';
+
     protected $fillable = [
         'sect',
         'created_by',
         'approved_by',
-        'approved_at'
+        'approved_at',
     ];
 
     protected $casts = [

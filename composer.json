@@ -38,13 +38,20 @@
         }
     },
     "scripts": {
-        "fix": "vendor/bin/php-cs-fixer fix -v --config=.php-cs-fixer.php",
-        "md": "vendor/bin/phpmd ./app ./config ./database ./lang ./routes xml ./phpmd.xml --color",
+        "test": [
+            "composer generate",
+            "composer fix",
+            "composer md"
+        ],
         "generate": [
             "./vendor/bin/openapi app -o api-specs.yaml",
             "rm -rf vendor/kenisty/",
-            "openapi-generator-cli generate -i ./api-specs.yaml -g php -o vendor/kenisty/ --api-package Kenisty --model-package Kenisty"
+            "openapi-generator-cli generate -i ./api-specs.yaml -g php -o vendor/kenisty/ --api-package Kenisty --model-package Kenisty",
+            "rm -rf docs/",
+            "openapi-generator-cli generate -i ./api-specs.yaml -g html -o docs/ --api-package Kenisty --model-package Kenisty"
         ],
+        "fix": "vendor/bin/php-cs-fixer fix -v --config=.php-cs-fixer.php",
+        "md": "vendor/bin/phpmd ./app ./config ./database ./lang ./routes xml ./phpmd.xml --color",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

@@ -9,10 +9,25 @@ use OpenApi\Attributes as OA;
     description: 'The main entry point for Kenisty project.',
     title: 'Kenisty API',
     contact: new OA\Contact(
-        name: 'Pola Eskandar',
-        url: 'https://codingstreamer.com',
-        email: 'eskandar.pola@codingstreamer.com',
+        name: 'Kenisty IT Team',
+        url: 'https://kenisty.com',
+    ),
+    license: new OA\License(
+        name: 'MIT',
     ),
 )]
-#[OA\License(name: 'MIT')]
-class OpenApiSpecs {}
+#[OA\Server(
+    url: 'http://localhost:8000/',
+    description: 'Development Server',
+)]
+#[OA\Server(
+    url: 'https://kenisty.com/',
+    description: 'Production Server',
+)]
+#[OA\SecurityScheme(
+    securityScheme: 'BasicAuth',
+    type: 'http',
+    name: 'BasicAuth',
+    scheme: 'Basic',
+)]
+class OpenApiSpecs { }

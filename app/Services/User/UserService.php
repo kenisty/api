@@ -29,7 +29,6 @@ readonly class UserService
 
     public function __construct(
         private UserRepository $userRepository,
-        private RoleService $roleService,
         private TokenService $tokenService,
         private PasswordService $passwordService,
     ) {
@@ -58,7 +57,6 @@ readonly class UserService
         try {
             $user = $this->userRepository->create($entry);
             Log::info(self::KEY_USER_CREATED_MESSAGE, [self::KEY_ID => $user->id]);
-            $this->roleService->assignUserDefaultRole($user);
             $token = $this->tokenService->assignAuthToken($user);
         } catch (Exception $exception) {
             Log::error($exception->getMessage(), [self::KEY_EXCEPTION => $exception->getTraceAsString()]);

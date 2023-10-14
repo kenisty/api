@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace App\DTOs;
+namespace App\DTOs\Schemas\User;
 
-interface DefaultDTOInterface
+interface DefaultSchemaInterface
 {
     public function toArray(): array;
 

@@ -6,7 +6,7 @@ enum PermissionActions: string
 {
     case CREATE = 'Create';
     case UPDATE = 'Update';
-     case DELETE = 'Delete';
+    case DELETE = 'Delete';
     case FORCE_DELETE = 'ForceDelete';
     case RESTORE = 'Restore';
 }

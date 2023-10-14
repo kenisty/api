@@ -3,17 +3,25 @@ info:
   title: 'Kenisty API'
   description: 'The main entry point for Kenisty project.'
   contact:
-    name: 'Pola Eskandar'
-    url: 'https://codingstreamer.com'
-    email: eskandar.pola@codingstreamer.com
+    name: 'Kenisty IT Team'
+    url: 'https://kenisty.com'
   license:
     name: MIT
   version: 1.0.0
+servers:
+  -
+    url: 'http://localhost:8000/'
+    description: 'Development Server'
+  -
+    url: 'https://kenisty.com/'
+    description: 'Production Server'
 paths:
   /v1/auth/register:
     post:
       tags:
         - Authentication
+      summary: 'A request to register a new user.'
+      description: 'Request for registering new users in. Returns a status code of 201 if the user was able to successfully register attached with an authentication token.'
       operationId: 557dcb2ee3dfdae1e150def5ea1f831c
       requestBody:
         content:
@@ -29,10 +37,13 @@ paths:
                 $ref: '#/components/schemas/UserRegisterWriteV1'
         '422':
           description: 'Failed validation.'
+      security: []
   /v1/auth/login:
     post:
       tags:
         - Authentication
+      summary: 'A request to login a user.'
+      description: 'Request for logging existing users in. Returns a status code of 200 if the user was able to successfully login in attached with an authentication token.'
       operationId: d4c4c6392927052c421daac9d0a1c2fc
       requestBody:
         content:
@@ -40,7 +51,7 @@ paths:
             schema:
               $ref: '#/components/schemas/UserLoginReadV1'
       responses:
-        '201':
+        '200':
           description: 'Successfully logged in an existing user.'
           content:
             application/json:
@@ -48,6 +59,7 @@ paths:
                 $ref: '#/components/schemas/UserLoginWriteV1'
         '422':
           description: 'Failed validation.'
+      security: []
 components:
   schemas:
     UserLoginReadV1:
@@ -138,3 +150,8 @@ components:
         email:
           type: string
       type: object
+  securitySchemes:
+    BasicAuth:
+      type: http
+      name: BasicAuth
+      scheme: Basic
