@@ -4,28 +4,33 @@ declare(strict_types=1);
 
 namespace App\DTOs\Schemas\User;
 
+use App\DTOs\Schemas\DefaultSchemaInterface;
+use App\Services\TypeSafe;
 use OpenApi\Attributes as OA;
 
 #[OA\Schema(schema: 'UserDataV1', title: 'UserDataV1', description: 'A schema containing all the user data, that should be sent as a response.')]
-final readonly class UserDataV1 implements DefaultSchemaInterface
+final class UserDataV1 implements DefaultSchemaInterface
 {
     private const KEY_TOKEN = 'token';
     private const KEY_FIRST_NAME = 'firstname';
     private const KEY_LAST_NAME = 'lastname';
     private const KEY_EMAIL = 'email';
 
-    #[OA\Property(type: 'string')]
-    private ?string $token;
+    #[OA\Property(property: self::KEY_TOKEN, title: 'Token', type: 'string')]
+    private ?string $token = null;
 
-    #[OA\Property(type: 'string')]
-    private ?string $firstname;
+    #[OA\Property(property: self::KEY_FIRST_NAME, title: 'Firstname', type: 'string')]
+    private ?string $firstname = null;
 
-    #[OA\Property(type: 'string')]
-    private ?string $lastname;
+    #[OA\Property(property: self::KEY_LAST_NAME, title: 'Lastname', type: 'string')]
+    private ?string $lastname = null;
 
-    #[OA\Property(type: 'string')]
-    private ?string $email;
+    #[OA\Property(property: self::KEY_EMAIL, title: 'Email', type: 'string')]
+    private ?string $email = null;
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [
@@ -36,13 +41,16 @@ final readonly class UserDataV1 implements DefaultSchemaInterface
         ];
     }
 
-    public function fromArray(array $data): self
+    /**
+     * @param array<string, mixed> $data
+     */
+    public static function fromArray(array $data): self
     {
         return (new self())
-            ->setToken($data[self::KEY_TOKEN] ?? null)
-            ->setFirstname($data[self::KEY_FIRST_NAME] ?? null)
-            ->setLastname($data[self::KEY_LAST_NAME] ?? null)
-            ->setEmail($data[self::KEY_EMAIL] ?? null);
+            ->setToken(TypeSafe::getString($data[self::KEY_TOKEN]) ?? null)
+            ->setFirstname(TypeSafe::getString($data[self::KEY_FIRST_NAME]) ?? null)
+            ->setLastname(TypeSafe::getString($data[self::KEY_LAST_NAME]) ?? null)
+            ->setEmail(TypeSafe::getString($data[self::KEY_EMAIL]) ?? null);
     }
 
     public function setToken(?string $token): self

@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Church extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     protected $connection = 'mysql';
 
@@ -18,8 +19,6 @@ class Church extends Model
         'name',
         'sect_id',
         'created_by',
-        'approved_by',
-        'approved_at',
     ];
 
     protected $casts = [

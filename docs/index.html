@@ -240,13 +240,13 @@ font-style: italic;
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
-  "data" : {
+  "message" : "message",
+  "user" : {
     "firstname" : "firstname",
     "email" : "email",
     "token" : "token",
     "lastname" : "lastname"
-  },
-  "message" : "message"
+  }
 }</code></pre>
 
     <h3 class="field-label">Produces</h3>
@@ -262,7 +262,7 @@ font-style: italic;
         <a href="#UserRegisterWriteV1">UserRegisterWriteV1</a>
     <h4 class="field-label">422</h4>
     Failed validation.
-        <a href="#"></a>
+        <a href="#ValidationExceptionV1">ValidationExceptionV1</a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="d4c4c6392927052c421daac9d0a1c2fc"/>
@@ -301,13 +301,13 @@ font-style: italic;
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
-  "data" : {
+  "message" : "message",
+  "user" : {
     "firstname" : "firstname",
     "email" : "email",
     "token" : "token",
     "lastname" : "lastname"
-  },
-  "message" : "message"
+  }
 }</code></pre>
 
     <h3 class="field-label">Produces</h3>
@@ -318,12 +318,12 @@ font-style: italic;
     </ul>
 
     <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
+    <h4 class="field-label">201</h4>
     Successfully logged in an existing user.
         <a href="#UserLoginWriteV1">UserLoginWriteV1</a>
     <h4 class="field-label">422</h4>
     Failed validation.
-        <a href="#"></a>
+        <a href="#ValidationExceptionV1">ValidationExceptionV1</a>
   </div> <!-- method -->
   <hr/>
 
@@ -332,22 +332,14 @@ font-style: italic;
 
   <h3>Table of Contents</h3>
   <ol>
-    <li><a href="#ServerExceptionWriteV1"><code>ServerExceptionWriteV1</code> - ServerExceptionWriteV1</a></li>
     <li><a href="#UserDataV1"><code>UserDataV1</code> - UserDataV1</a></li>
     <li><a href="#UserLoginReadV1"><code>UserLoginReadV1</code> - UserLoginReadV1</a></li>
     <li><a href="#UserLoginWriteV1"><code>UserLoginWriteV1</code> - UserLoginWriteV1</a></li>
     <li><a href="#UserRegisterReadV1"><code>UserRegisterReadV1</code> - UserRegisterReadV1</a></li>
     <li><a href="#UserRegisterWriteV1"><code>UserRegisterWriteV1</code> - UserRegisterWriteV1</a></li>
+    <li><a href="#ValidationExceptionV1"><code>ValidationExceptionV1</code> - ValidationExceptionV1</a></li>
   </ol>
 
-  <div class="model">
-    <h3><a name="ServerExceptionWriteV1"><code>ServerExceptionWriteV1</code> - ServerExceptionWriteV1</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>Response schema for a generic server error V1.</div>
-    <div class="field-items">
-      <div class="param">code (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
-<div class="param">message (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
   <div class="model">
     <h3><a name="UserDataV1"><code>UserDataV1</code> - UserDataV1</a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'>A schema containing all the user data, that should be sent as a response.</div>
@@ -360,7 +352,7 @@ font-style: italic;
   </div>
   <div class="model">
     <h3><a name="UserLoginReadV1"><code>UserLoginReadV1</code> - UserLoginReadV1</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>Request schema for logging in a user V1.</div>
+    <div class='model-description'>Request schema for logging in an existing user V1</div>
     <div class="field-items">
       <div class="param">email (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">password (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
@@ -371,7 +363,7 @@ font-style: italic;
     <div class='model-description'>Response schema for successfully logging in an existing user V1.</div>
     <div class="field-items">
       <div class="param">message (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">data (optional)</div><div class="param-desc"><span class="param-type"><a href="#UserDataV1">UserDataV1</a></span>  </div>
+<div class="param">user (optional)</div><div class="param-desc"><span class="param-type"><a href="#UserDataV1">UserDataV1</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
@@ -390,7 +382,15 @@ font-style: italic;
     <div class='model-description'>Response schema for successfully registering a new user V1.</div>
     <div class="field-items">
       <div class="param">message (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">data (optional)</div><div class="param-desc"><span class="param-type"><a href="#UserDataV1">UserDataV1</a></span>  </div>
+<div class="param">user (optional)</div><div class="param-desc"><span class="param-type"><a href="#UserDataV1">UserDataV1</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ValidationExceptionV1"><code>ValidationExceptionV1</code> - ValidationExceptionV1</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Response schema for a generic validation error V1.</div>
+    <div class="field-items">
+      <div class="param">code (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">message (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   </body>

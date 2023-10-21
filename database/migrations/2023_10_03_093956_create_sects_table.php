@@ -11,8 +11,6 @@ return new class extends Migration {
             $table->id();
             $table->string('sect')->unique();
             $table->foreignId('created_by')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
-            $table->foreignId('approved_by')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
-            $table->timestamp('approved_at');
             $table->timestamps();
             $table->softDeletes();
         });

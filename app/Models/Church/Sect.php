@@ -18,8 +18,6 @@ class Sect extends Model
     protected $fillable = [
         'sect',
         'created_by',
-        'approved_by',
-        'approved_at',
     ];
 
     protected $casts = [

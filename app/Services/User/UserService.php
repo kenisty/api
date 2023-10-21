@@ -9,9 +9,11 @@ use App\Exceptions\User\InvalidPasswordException;
 use App\Exceptions\User\UserAlreadyExistsException;
 use App\Exceptions\User\UserNotFoundException;
 use App\Repositories\User\UserRepository;
+use App\Services\TypeSafe;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use LogicException;
 
 readonly class UserService
 {
@@ -35,15 +37,17 @@ readonly class UserService
     }
 
     /**
+     * @param array<string, mixed> $data
+     *
      * @throws Exception|UserAlreadyExistsException
      */
     public function registerUser(array $data): UserDataV1
     {
         $entry = [
-            self::KEY_FIRST_NAME => $data[self::KEY_FIRST_NAME],
-            self::KEY_LAST_NAME => $data[self::KEY_LAST_NAME],
-            self::KEY_EMAIL => $data[self::KEY_EMAIL],
-            self::KEY_PASSWORD => Hash::make($data[self::KEY_PASSWORD]),
+            self::KEY_FIRST_NAME => TypeSafe::getString($data[self::KEY_FIRST_NAME]) ?? throw new LogicException('Firstname cannot be null.'),
+            self::KEY_LAST_NAME => TypeSafe::getString($data[self::KEY_LAST_NAME]) ?? throw new LogicException('Lastname cannot be null.'),
+            self::KEY_EMAIL => TypeSafe::getString($data[self::KEY_EMAIL]) ?? throw new LogicException('Email cannot be null.'),
+            self::KEY_PASSWORD => Hash::make(TypeSafe::getString($data[self::KEY_PASSWORD]) ?? throw new LogicException('Password cannot be null.')),
         ];
 
         $user = $this->userRepository->findByEmail($entry[self::KEY_EMAIL]);
@@ -72,19 +76,21 @@ readonly class UserService
     }
 
     /**
+     * @param array<string, mixed> $data
+     *
      * @throws Exception|InvalidPasswordException|UserNotFoundException
      */
     public function loginUser(array $data): UserDataV1
     {
         $entry = [
-            self::KEY_EMAIL => $data[self::KEY_EMAIL],
-            self::KEY_PASSWORD => $data[self::KEY_PASSWORD],
+            self::KEY_EMAIL => TypeSafe::getString($data[self::KEY_EMAIL]) ?? throw new LogicException('Email cannot be null.'),
+            self::KEY_PASSWORD => TypeSafe::getString($data[self::KEY_PASSWORD]) ?? throw new LogicException('Password cannot be null.'),
         ];
 
         $user = $this->userRepository->findByEmail($entry[self::KEY_EMAIL]);
 
         if (!$user) {
-            Log::error(self::KEY_USER_NOT_FOUND_MESSAGE, [self::KEY_ID => $user->id]);
+            Log::error(self::KEY_USER_NOT_FOUND_MESSAGE);
 
             throw new UserNotFoundException;
         }
@@ -106,8 +112,8 @@ readonly class UserService
         }
 
         return (new UserDataV1())
-            ->setFirstname($user->first_name)
-            ->setLastname($user->last_name)
+            ->setFirstname($user->firstname)
+            ->setLastname($user->lastname)
             ->setEmail($user->email)
             ->setToken($token);
     }

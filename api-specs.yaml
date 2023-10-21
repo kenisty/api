@@ -27,16 +27,58 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRegisterReadV1'
+              title: UserRegisterReadV1
+              description: 'Request schema for registering a new user V1'
+              properties:
+                firstname:
+                  title: Firstname
+                  type: string
+                  maxLength: 255
+                  minLength: 3
+                  nullable: false
+                lastname:
+                  title: Lastname
+                  type: string
+                  maxLength: 255
+                  minLength: 3
+                  nullable: false
+                email:
+                  title: Email
+                  type: string
+                  maxLength: 255
+                  minLength: 3
+                  nullable: false
+                password:
+                  title: Password
+                  type: string
+                  maxLength: 255
+                  minLength: 8
+                  nullable: false
+                password_confirmation:
+                  title: 'Password Confirmation'
+                  type: string
+                  maxLength: 255
+                  minLength: 8
+                  nullable: false
+              type: object
       responses:
         '201':
           description: 'Successfully registered a new user.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserRegisterWriteV1'
+                title: UserRegisterWriteV1
+                description: 'Response schema for successfully registering a new user V1.'
+                properties:
+                  message: { title: Message, type: string }
+                  user: { $ref: '#/components/schemas/UserDataV1' }
+                type: object
         '422':
           description: 'Failed validation.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationExceptionV1'
       security: []
   /v1/auth/login:
     post:
@@ -49,105 +91,65 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserLoginReadV1'
+              title: UserLoginReadV1
+              description: 'Request schema for logging in an existing user V1'
+              properties:
+                email:
+                  title: Email
+                  type: string
+                  nullable: false
+                password:
+                  title: Password
+                  type: string
+                  nullable: false
+              type: object
       responses:
-        '200':
+        '201':
           description: 'Successfully logged in an existing user.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserLoginWriteV1'
+                title: UserLoginWriteV1
+                description: 'Response schema for successfully logging in an existing user V1.'
+                properties:
+                  message: { title: Message, type: string }
+                  user: { $ref: '#/components/schemas/UserDataV1' }
+                type: object
         '422':
           description: 'Failed validation.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationExceptionV1'
       security: []
 components:
   schemas:
-    UserLoginReadV1:
-      title: UserLoginReadV1
-      description: 'Request schema for logging in a user V1.'
-      properties:
-        email:
-          title: Email
-          type: string
-          nullable: false
-        password:
-          title: Password
-          type: string
-          nullable: false
-      type: object
-    UserRegisterReadV1:
-      title: UserRegisterReadV1
-      description: 'Request schema for registering a new user V1'
-      properties:
-        firstname:
-          title: Firstname
-          type: string
-          maxLength: 255
-          minLength: 3
-          nullable: false
-        lastname:
-          title: Lastname
-          type: string
-          maxLength: 255
-          minLength: 3
-          nullable: false
-        email:
-          title: Email
-          type: string
-          maxLength: 255
-          minLength: 3
-          nullable: false
-        password:
-          title: Password
-          type: string
-          maxLength: 255
-          minLength: 8
-          nullable: false
-        password_confirmation:
-          title: 'Password Confirmation'
-          type: string
-          maxLength: 255
-          minLength: 8
-          nullable: false
-      type: object
-    ServerExceptionWriteV1:
-      title: ServerExceptionWriteV1
-      description: 'Response schema for a generic server error V1.'
+    ValidationExceptionV1:
+      title: ValidationExceptionV1
+      description: 'Response schema for a generic validation error V1.'
       properties:
         code:
-          type: integer
-        message:
+          title: 'Error code'
           type: string
-      type: object
-    UserLoginWriteV1:
-      title: UserLoginWriteV1
-      description: 'Response schema for successfully logging in an existing user V1.'
-      properties:
         message:
+          title: Message
           type: string
-        data:
-          $ref: '#/components/schemas/UserDataV1'
-      type: object
-    UserRegisterWriteV1:
-      title: UserRegisterWriteV1
-      description: 'Response schema for successfully registering a new user V1.'
-      properties:
-        message:
-          type: string
-        data:
-          $ref: '#/components/schemas/UserDataV1'
       type: object
     UserDataV1:
       title: UserDataV1
       description: 'A schema containing all the user data, that should be sent as a response.'
       properties:
         token:
+          title: Token
           type: string
         firstname:
+          title: Firstname
           type: string
         lastname:
+          title: Lastname
           type: string
         email:
+          title: Email
           type: string
       type: object
   securitySchemes:

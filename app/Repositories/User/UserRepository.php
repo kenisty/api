@@ -8,8 +8,14 @@ use App\Models\User\User;
 use App\Repositories\DefaultRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * @implements DefaultRepositoryInterface<User>
+ */
 class UserRepository implements DefaultRepositoryInterface
 {
+    /**
+     * @return Collection<int, User>
+     */
     public function getAll(): Collection
     {
         return User::all();
@@ -25,12 +31,12 @@ class UserRepository implements DefaultRepositoryInterface
         return User::where('email', $email)->first();
     }
 
-    public function create(mixed $entry): User
+    public function create(array $entry): User
     {
         return User::create($entry);
     }
 
-    public function update(string $id, mixed $entry): User
+    public function update(string $id, array $entry): bool
     {
         return User::findOrFail($id)->update($entry);
     }

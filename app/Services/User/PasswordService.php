@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Hash;
 
 readonly class PasswordService
 {
-    public function checkPassword(string $enteredPassword, $userPasswordInDatabase): bool
+    public function checkPassword(string $enteredPassword, string $userPasswordInDatabase): bool
     {
         return Hash::check($enteredPassword, $userPasswordInDatabase);
     }

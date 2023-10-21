@@ -17,12 +17,9 @@ class RouteServiceProvider extends ServiceProvider
     {
         RateLimiter::for('api', static function (Request $request) {
             $user = $request->user();
+            $limitBy = $user instanceof User ? $user->id : $request->ip();
 
-            if (!$user instanceof User) {
-                return Limit::perMinute(60)->by($request->ip());
-            }
-
-            return Limit::perMinute(60)->by($user->id);
+            return Limit::perMinute(60)->by($limitBy);
         });
 
         $this->routes(static fn () => Route::middleware('api')->group(base_path('routes/v1/api.php')));
