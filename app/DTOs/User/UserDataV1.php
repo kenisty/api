@@ -28,9 +28,6 @@ final class UserDataV1 implements DefaultDtoInterface
     #[OA\Property(property: self::KEY_EMAIL, title: 'Email', type: 'string')]
     private ?string $email = null;
 
-    /**
-     * @return array<string, mixed>
-     */
     public function toArray(): array
     {
         return [
@@ -41,9 +38,6 @@ final class UserDataV1 implements DefaultDtoInterface
         ];
     }
 
-    /**
-     * @param array<string, mixed> $data
-     */
     public static function fromArray(array $data): self
     {
         return (new self())

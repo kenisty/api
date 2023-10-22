@@ -2,10 +2,12 @@
 
 namespace App\Clients;
 
+use Illuminate\Support\Facades\Http;
+
 class CMSClient implements DefaultClientInterface
 {
     public function post(array $data): void
     {
-        // TODO: implement sending post request to cms
+        Http::post('http://127.0.0.1:8080/api/receive', $data);
     }
 }

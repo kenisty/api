@@ -13,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-#[TransferEntity(name: 'user', normalizer: UserNormalizer::class)]
+#[TransferEntity(model: 'api_user', normalizer: UserNormalizer::class)]
 class User extends Authenticatable
 {
     use HasApiTokens;

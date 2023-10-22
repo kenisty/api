@@ -18,9 +18,6 @@ final class ValidationExceptionV1 implements DefaultDtoInterface, DefaultExcepti
     #[OA\Property(property: self::KEY_MESSAGE, title: 'Message', type: 'string')]
     private ?string $message = null;
 
-    /**
-     * @return array<string, mixed>
-     */
     public function toArray(): array
     {
         return [
@@ -29,9 +26,6 @@ final class ValidationExceptionV1 implements DefaultDtoInterface, DefaultExcepti
         ];
     }
 
-    /**
-     * @param array<string, int|string|null> $data
-     */
     public static function fromArray(array $data): self
     {
         return (new self())

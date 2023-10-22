@@ -8,7 +8,7 @@ use Attribute;
 class TransferEntity
 {
     public function __construct(
-        public string $name,
+        public string $model,
         public string $normalizer,
     ) { }
 }
