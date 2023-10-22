@@ -2,13 +2,15 @@
 
 namespace App\Normalizers;
 
+use App\DTOs\DefaultDtoInterface;
+
 /**
  * @template T
  */
 interface DefaultNormalizerInterface
 {
     /**
-     * @return array<string, mixed>
+     * @param T $model
      */
-    public static function normalize(mixed $model): array;
+    public static function normalize(mixed $model): DefaultDtoInterface;
 }

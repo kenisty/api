@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace App\DTOs\Schemas\Exception;
+namespace App\DTOs\Exception;
 
-use App\DTOs\Schemas\DefaultSchemaInterface;
+use App\DTOs\DefaultDtoInterface;
 use App\Services\TypeSafe;
 use OpenApi\Attributes as OA;
 
 #[OA\Schema(schema: 'ValidationExceptionV1', title: 'ValidationExceptionV1', description: 'Response schema for a generic validation error V1.')]
-final class ValidationExceptionV1 implements DefaultSchemaInterface, DefaultExceptionInterface
+final class ValidationExceptionV1 implements DefaultDtoInterface, DefaultExceptionInterface
 {
     private const KEY_CODE = 'code';
     private const KEY_MESSAGE = 'message';

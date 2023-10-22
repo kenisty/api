@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\User;
 
-use App\DTOs\Schemas\User\UserDataV1;
+use App\DTOs\User\UserDataV1;
 use App\Exceptions\User\InvalidPasswordException;
 use App\Exceptions\User\UserAlreadyExistsException;
 use App\Exceptions\User\UserNotFoundException;

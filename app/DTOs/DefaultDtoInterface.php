@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace App\DTOs\Schemas;
+namespace App\DTOs;
 
-interface DefaultSchemaInterface
+interface DefaultDtoInterface
 {
     /**
      * @return array<string, mixed>

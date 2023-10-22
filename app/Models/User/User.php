@@ -3,18 +3,23 @@
 namespace App\Models\User;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Attributes\TransferEntity;
 use App\Models\Church\Church;
+use App\Models\Traits\RequestTransferEntityTrait;
+use App\Normalizers\UserNormalizer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+#[TransferEntity(name: 'user', normalizer: UserNormalizer::class)]
 class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
+    use RequestTransferEntityTrait;
 
     protected $connection = 'mysql';
 

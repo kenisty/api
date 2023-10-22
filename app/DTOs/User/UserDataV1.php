@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\DTOs\Schemas\User;
+namespace App\DTOs\User;
 
-use App\DTOs\Schemas\DefaultSchemaInterface;
+use App\DTOs\DefaultDtoInterface;
 use App\Services\TypeSafe;
 use OpenApi\Attributes as OA;
 
 #[OA\Schema(schema: 'UserDataV1', title: 'UserDataV1', description: 'A schema containing all the user data, that should be sent as a response.')]
-final class UserDataV1 implements DefaultSchemaInterface
+final class UserDataV1 implements DefaultDtoInterface
 {
     private const KEY_TOKEN = 'token';
     private const KEY_FIRST_NAME = 'firstname';
