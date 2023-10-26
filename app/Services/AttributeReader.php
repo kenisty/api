@@ -9,6 +9,18 @@ use ReflectionException;
 class AttributeReader
 {
     /**
+     * @param class-string $classname
+     * @throws ReflectionException
+     * @return array<ReflectionAttribute<object>>
+     */
+    public static function readAttributes(string $classname): array
+    {
+        $classReflection = new ReflectionClass($classname);
+
+        return $classReflection->getAttributes();
+    }
+
+    /**
      * @param class-string $modelClassname
      * @throws ReflectionException
      */
@@ -25,17 +37,5 @@ class AttributeReader
         }
 
         return null;
-    }
-
-    /**
-     * @param class-string $classname
-     * @throws ReflectionException
-     * @return array<ReflectionAttribute<object>>
-     */
-    public static function readAttributes(string $classname): array
-    {
-        $classReflection = new ReflectionClass($classname);
-
-        return $classReflection->getAttributes();
     }
 }

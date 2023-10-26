@@ -5,19 +5,23 @@ namespace App\Normalizers;
 use App\DTOs\User\UserDataV1;
 use App\Models\User\User;
 
-/**
- * @implements DefaultNormalizerInterface<UserNormalizer>
- */
-class UserNormalizer implements DefaultNormalizerInterface
+class UserNormalizer extends AbstractNormalizer
 {
+    public const KEY_MODEL_NAME = 'api_user';
+
     /**
      * @param User $model
      */
-    public static function normalize(mixed $model): UserDataV1
+    protected function normalizeData(mixed $model): UserDataV1
     {
         return (new UserDataV1())
             ->setFirstname($model->firstname)
             ->setLastname($model->lastname)
             ->setEmail($model->email);
+    }
+
+    protected function getModelName(): string
+    {
+        return self::KEY_MODEL_NAME;
     }
 }

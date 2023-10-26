@@ -3,8 +3,9 @@
 namespace App\Services\Transfer;
 
 use App\Attributes\TransferEntity;
+use App\Enums\TransferMode;
 use App\Jobs\TransferToCMS;
-use App\Normalizers\DefaultNormalizerInterface;
+use App\Normalizers\AbstractNormalizer;
 use App\Services\AttributeReader;
 use Illuminate\Database\Eloquent\Model;
 use LogicException;
@@ -12,35 +13,25 @@ use ReflectionException;
 
 readonly class TransferToCMSService
 {
+    protected const KEY_NORMALIZER = 'normalizer';
+
     /**
      * @throws ReflectionException
      */
-    public function transfer(Model $model, string $mode): void
+    public function transfer(Model $model, TransferMode $mode): void
     {
-        $normalizer = $this->getNormalizerInstance($model::class);
+        $normalizer = $this->getNormalizerInstance($model);
 
-        assert($normalizer instanceof DefaultNormalizerInterface);
+        assert($normalizer instanceof AbstractNormalizer);
 
-        $data = $normalizer->normalize($model)->toArray();
-        $normalizedModel['meta']['mode'] = $mode;
-        $normalizedModel['meta']['model'] = AttributeReader::getArgumentValue($model::class, TransferEntity::class, 'model');
-        $normalizedModel['data'] = $data;
-
-        TransferToCMS::dispatch($normalizedModel);
+        TransferToCMS::dispatch($normalizer->normalize($model, $normalizer, $mode));
     }
 
     /**
-     * @param class-string $classname
      * @throws ReflectionException
      */
-    private function getNormalizerInstance(string $classname): object
+    private function getNormalizerInstance(Model $model): mixed
     {
-        $normalizer = AttributeReader::getArgumentValue($classname, TransferEntity::class, 'normalizer');
-
-        if ($normalizer === null) {
-            throw new LogicException('No normalizer for mode found');
-        }
-
-        return new $normalizer;
+        return new (AttributeReader::getArgumentValue($model::class, TransferEntity::class, self::KEY_NORMALIZER) ?? new LogicException('No normalizer for model found'));
     }
 }
