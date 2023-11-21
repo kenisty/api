@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\DTOs\User;
+namespace App\DTOs;
 
-use App\DTOs\DefaultDtoInterface;
 use App\Services\TypeSafe;
 use OpenApi\Attributes as OA;
 

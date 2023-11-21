@@ -18,7 +18,7 @@ abstract class AbstractNormalizer
      */
     public function normalize(Model $model, self $normalizer, TransferMode $mode): array
     {
-        $data = $normalizer->normalizeData($model);
+        $data = $normalizer->normalizeData($model)->toArray();
         $meta = $normalizer->normalizeMeta($mode);
 
         return [

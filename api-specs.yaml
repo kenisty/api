@@ -22,7 +22,6 @@ paths:
         - Authentication
       summary: 'A request to register a new user.'
       description: 'Request for registering new users in. Returns a status code of 201 if the user was able to successfully register attached with an authentication token.'
-      operationId: 557dcb2ee3dfdae1e150def5ea1f831c
       requestBody:
         content:
           application/json:
@@ -78,7 +77,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationExceptionV1'
+                $ref: '#/components/schemas/ExceptionV1'
       security: []
   /v1/auth/login:
     post:
@@ -86,7 +85,6 @@ paths:
         - Authentication
       summary: 'A request to login a user.'
       description: 'Request for logging existing users in. Returns a status code of 200 if the user was able to successfully login in attached with an authentication token.'
-      operationId: d4c4c6392927052c421daac9d0a1c2fc
       requestBody:
         content:
           application/json:
@@ -120,21 +118,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ValidationExceptionV1'
+                $ref: '#/components/schemas/ExceptionV1'
       security: []
 components:
   schemas:
-    ValidationExceptionV1:
-      title: ValidationExceptionV1
-      description: 'Response schema for a generic validation error V1.'
-      properties:
-        code:
-          title: 'Error code'
-          type: string
-        message:
-          title: Message
-          type: string
-      type: object
     UserDataV1:
       title: UserDataV1
       description: 'A schema containing all the user data, that should be sent as a response.'
@@ -150,6 +137,17 @@ components:
           type: string
         email:
           title: Email
+          type: string
+      type: object
+    ExceptionV1:
+      title: ExceptionV1
+      description: 'Response schema for a generic validation error V1.'
+      properties:
+        code:
+          title: 'Error code'
+          type: string
+        message:
+          title: Message
           type: string
       type: object
   securitySchemes:

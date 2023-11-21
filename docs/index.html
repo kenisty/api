@@ -199,77 +199,16 @@ font-style: italic;
   <div class="method-summary"></div>
   <h4><a href="#Authentication">Authentication</a></h4>
   <ul>
-  <li><a href="#557dcb2ee3dfdae1e150def5ea1f831c"><code><span class="http-method">post</span> /v1/auth/register</code></a></li>
-  <li><a href="#d4c4c6392927052c421daac9d0a1c2fc"><code><span class="http-method">post</span> /v1/auth/login</code></a></li>
+  <li><a href="#v1AuthLoginPost"><code><span class="http-method">post</span> /v1/auth/login</code></a></li>
+  <li><a href="#v1AuthRegisterPost"><code><span class="http-method">post</span> /v1/auth/register</code></a></li>
   </ul>
 
   <h1><a name="Authentication">Authentication</a></h1>
-  <div class="method"><a name="557dcb2ee3dfdae1e150def5ea1f831c"/>
-    <div class="method-path">
-    <a class="up" href="#__Methods">Up</a>
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/auth/register</code></pre></div>
-    <div class="method-summary">A request to register a new user. (<span class="nickname">557dcb2ee3dfdae1e150def5ea1f831c</span>)</div>
-    <div class="method-notes">Request for registering new users in. Returns a status code of 201 if the user was able to successfully register attached with an authentication token.</div>
-
-
-    <h3 class="field-label">Consumes</h3>
-    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Request body</h3>
-    <div class="field-items">
-      <div class="param">UserRegisterReadV1 <a href="#UserRegisterReadV1">UserRegisterReadV1</a> (optional)</div>
-
-      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
-
-    </div>  <!-- field-items -->
-
-
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      <a href="#UserRegisterWriteV1">UserRegisterWriteV1</a>
-      
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>{
-  "message" : "message",
-  "user" : {
-    "firstname" : "firstname",
-    "email" : "email",
-    "token" : "token",
-    "lastname" : "lastname"
-  }
-}</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">201</h4>
-    Successfully registered a new user.
-        <a href="#UserRegisterWriteV1">UserRegisterWriteV1</a>
-    <h4 class="field-label">422</h4>
-    Failed validation.
-        <a href="#ValidationExceptionV1">ValidationExceptionV1</a>
-  </div> <!-- method -->
-  <hr/>
-  <div class="method"><a name="d4c4c6392927052c421daac9d0a1c2fc"/>
+  <div class="method"><a name="v1AuthLoginPost"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/auth/login</code></pre></div>
-    <div class="method-summary">A request to login a user. (<span class="nickname">d4c4c6392927052c421daac9d0a1c2fc</span>)</div>
+    <div class="method-summary">A request to login a user. (<span class="nickname">v1AuthLoginPost</span>)</div>
     <div class="method-notes">Request for logging existing users in. Returns a status code of 200 if the user was able to successfully login in attached with an authentication token.</div>
 
 
@@ -323,7 +262,68 @@ font-style: italic;
         <a href="#UserLoginWriteV1">UserLoginWriteV1</a>
     <h4 class="field-label">422</h4>
     Failed validation.
-        <a href="#ValidationExceptionV1">ValidationExceptionV1</a>
+        <a href="#ExceptionV1">ExceptionV1</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="v1AuthRegisterPost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/auth/register</code></pre></div>
+    <div class="method-summary">A request to register a new user. (<span class="nickname">v1AuthRegisterPost</span>)</div>
+    <div class="method-notes">Request for registering new users in. Returns a status code of 201 if the user was able to successfully register attached with an authentication token.</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">UserRegisterReadV1 <a href="#UserRegisterReadV1">UserRegisterReadV1</a> (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#UserRegisterWriteV1">UserRegisterWriteV1</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "message" : "message",
+  "user" : {
+    "firstname" : "firstname",
+    "email" : "email",
+    "token" : "token",
+    "lastname" : "lastname"
+  }
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    Successfully registered a new user.
+        <a href="#UserRegisterWriteV1">UserRegisterWriteV1</a>
+    <h4 class="field-label">422</h4>
+    Failed validation.
+        <a href="#ExceptionV1">ExceptionV1</a>
   </div> <!-- method -->
   <hr/>
 
@@ -332,14 +332,22 @@ font-style: italic;
 
   <h3>Table of Contents</h3>
   <ol>
+    <li><a href="#ExceptionV1"><code>ExceptionV1</code> - ExceptionV1</a></li>
     <li><a href="#UserDataV1"><code>UserDataV1</code> - UserDataV1</a></li>
     <li><a href="#UserLoginReadV1"><code>UserLoginReadV1</code> - UserLoginReadV1</a></li>
     <li><a href="#UserLoginWriteV1"><code>UserLoginWriteV1</code> - UserLoginWriteV1</a></li>
     <li><a href="#UserRegisterReadV1"><code>UserRegisterReadV1</code> - UserRegisterReadV1</a></li>
     <li><a href="#UserRegisterWriteV1"><code>UserRegisterWriteV1</code> - UserRegisterWriteV1</a></li>
-    <li><a href="#ValidationExceptionV1"><code>ValidationExceptionV1</code> - ValidationExceptionV1</a></li>
   </ol>
 
+  <div class="model">
+    <h3><a name="ExceptionV1"><code>ExceptionV1</code> - ExceptionV1</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Response schema for a generic validation error V1.</div>
+    <div class="field-items">
+      <div class="param">code (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">message (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
   <div class="model">
     <h3><a name="UserDataV1"><code>UserDataV1</code> - UserDataV1</a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'>A schema containing all the user data, that should be sent as a response.</div>
@@ -383,14 +391,6 @@ font-style: italic;
     <div class="field-items">
       <div class="param">message (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
 <div class="param">user (optional)</div><div class="param-desc"><span class="param-type"><a href="#UserDataV1">UserDataV1</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="ValidationExceptionV1"><code>ValidationExceptionV1</code> - ValidationExceptionV1</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>Response schema for a generic validation error V1.</div>
-    <div class="field-items">
-      <div class="param">code (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">message (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   </body>

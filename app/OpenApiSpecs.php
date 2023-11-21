@@ -30,4 +30,13 @@ use OpenApi\Attributes as OA;
     name: 'BasicAuth',
     scheme: 'Basic',
 )]
+#[OA\Schema(
+    schema: 'ExceptionV1',
+    title: 'ExceptionV1',
+    description: 'Response schema for a generic validation error V1.',
+    properties: [
+        new OA\Property(property: 'code', title: 'Error code', type: 'string'),
+        new OA\Property(property: 'message', title: 'Message', type: 'string'),
+    ],
+)]
 class OpenApiSpecs { }

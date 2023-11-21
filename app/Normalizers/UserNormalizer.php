@@ -2,7 +2,7 @@
 
 namespace App\Normalizers;
 
-use App\DTOs\User\UserDataV1;
+use App\DTOs\UserDataV1;
 use App\Models\User\User;
 
 class UserNormalizer extends AbstractNormalizer
