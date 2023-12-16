@@ -30,15 +30,10 @@
         "symfony/yaml": "7.0.*"
     },
     "require-dev": {
-        "kenisty/backend-configs": "^1.2",
-        "kenisty/docs": "^1.2",
+        "kenisty/backend-configs": "^1.1",
         "symfony/maker-bundle": "^1.52"
     },
     "repositories": [
-        {
-            "url": "https://github.com/kenisty/docs.git",
-            "type": "vcs"
-        },
         {
             "url": "https://github.com/kenisty/backend-configs.git",
             "type": "vcs"
@@ -78,21 +73,19 @@
             "composer phpstan",
             "composer phpmd"
         ],
-        "fix": "vendor/kenisty/backend-configs/bin/php-cs-fixer fix -v --config=.php-cs-fixer.dist.php",
-        "phpstan":  "vendor/kenisty/backend-configs/bin/phpstan analyse",
-        "phpmd": "vendor/kenisty/backend-configs/bin/phpmd bin/ config/ public/ src/ migrations/ xml ./phpmd.xml --color",
-        "phpunit": "vendor/kenisty/backend-configs/bin/phpunit --color ./tests/",
+        "fix": "vendor/bin/php-cs-fixer fix -v --config=.php-cs-fixer.dist.php",
+        "phpstan":  "vendor/bin/phpstan analyse",
+        "phpmd": "vendor/bin/phpmd bin/ config/ public/ src/ migrations/ xml ./phpmd.xml --color",
+        "phpunit": "vendor/bin/phpunit --color ./tests/",
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts",
-            "cd vendor/kenisty/backend-configs && composer install"
+            "@auto-scripts"
         ],
         "post-update-cmd": [
-            "@auto-scripts",
-            "cd vendor/kenisty/backend-configs && composer install"
+            "@auto-scripts"
         ]
     },
     "conflict": {
@@ -100,7 +93,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": true,
             "require": "7.0.*",
             "docker": true
         }
